@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBackupUtility", "ServerBackupUtility\ServerBackupUtility.csproj", "{2614C9F4-A15E-42DB-82CA-58077705BAD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{E9E580A3-286D-4FB4-92B7-BFCA655C23C0}"
+	ProjectSection(SolutionItems) = preProject
+		Installer\Instructions.txt = Installer\Instructions.txt
+		Installer\License.txt = Installer\License.txt
+		Installer\UtilityInstall.bat = Installer\UtilityInstall.bat
+		Installer\UtilityUninstall.bat = Installer\UtilityUninstall.bat
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|x64.ActiveCfg = Debug|x64
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|x64.Build.0 = Debug|x64
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Debug|x86.Build.0 = Debug|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|ARM.Build.0 = Release|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|x64.ActiveCfg = Release|x64
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|x64.Build.0 = Release|x64
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|x86.ActiveCfg = Release|Any CPU
+		{2614C9F4-A15E-42DB-82CA-58077705BAD6}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62DA0E3E-660D-4D35-9675-95D2A1BED9FD}
+	EndGlobalSection
+EndGlobal
