@@ -42,13 +42,13 @@ C:\csvn\data\dumps\console\\*    <-- Back-up all files in the \console folder
 
 C:\csvn\data\dumps\identity\identity.exe    <-- Back-up the "identity.exe" file in the \identity folder
 
-C:\csvn\data\dumps\maps\*.zip    <-- Back-up all files in the \maps folder with the file extension ".zip"
+C:\csvn\data\dumps\maps\\*.zip    <-- Back-up all files in the \maps folder with the file extension ".zip"
 
 C:\csvn\data\dumps\samples\logs.*    <-- Back-up all files in the \samples folder with the file name "logs"
                                           and any extension
 
 C:\csvn\data\dumps\database\log??.zip    <-- Back-up all files in the \database folder with the file name
-                                              "log[any character][any character].zip"
+						"log[any character][any character].zip"
 
 
 ServerBackupService.exe.config
