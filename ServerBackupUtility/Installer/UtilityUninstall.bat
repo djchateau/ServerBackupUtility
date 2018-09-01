@@ -13,6 +13,7 @@ ECHO Uninstalling the Server Backup Utility.
 ECHO.
 ECHO Removing installation files.
 ECHO.
+DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupFiles.txt
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe.config
 DEL %SYSTEMDRIVE%\BackupUtility\localhost.pfx

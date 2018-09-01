@@ -1,8 +1,8 @@
-D:\csvn\data\dumps\backup\*.*.zip
-D:\csvn\data\dumps\console\*.*.zip
-D:\csvn\data\dumps\entities\*.*.zip
-D:\csvn\data\dumps\manage\*.*.zip
-D:\csvn\data\dumps\identity\*.*.zip
-D:\csvn\data\dumps\maps\*.*.zip
-D:\csvn\data\dumps\misc\*.*.zip
-D:\csvn\data\dumps\samples\*.*.zip
+D:\csvn\data\dumps\backup\*.zip
+D:\csvn\data\dumps\console\*.zip
+D:\csvn\data\dumps\entities\*.zip
+D:\csvn\data\dumps\manage\*.zip
+D:\csvn\data\dumps\identity\*.zip
+D:\csvn\data\dumps\maps\*.zip
+D:\csvn\data\dumps\misc\*.zip
+D:\csvn\data\dumps\samples\*.zip
