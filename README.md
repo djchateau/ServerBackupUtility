@@ -38,7 +38,7 @@ Pattern Match
 
 ? = character match (matches one character)
 
-C:\csvn\data\dumps\console\*    <-- Back-up all files in the \console folder
+C:\csvn\data\dumps\console\\*    <-- Back-up all files in the \console folder
 
 C:\csvn\data\dumps\identity\identity.exe    <-- Back-up the "identity.exe" file in the \identity folder
 
