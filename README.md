@@ -65,56 +65,56 @@ ServerBackupService.exe.config
 
 - List of folders separated by pipe characters, containing target sub-folders with multiple files,
   all of which will be archived and backed up as a single zip file
-	\add key="FolderPaths" value="D:\Webs|D:\Media\Video"
+	/ add key="FolderPaths" value="D:\Webs|D:\Media\Video"
 
 - Folder to store the above archived files for backup (All files in this folder will be backed up.)
-	\add key="ArchivePath" value="D:\Backups"
+	/ add key="ArchivePath" value="D:\Backups"
    
 - Folder to store the database archives (We do not recommend archiving database files with this utility.
   Use your database maintenance utility to archive your databases and place the backups in this folder.)
-	\add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
+	/ add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
 
 - Url of the FTP server
-	\add key="FtpUrl" value="online-server.com"
+	/ add key="FtpUrl" value="online-server.com"
 
 - User name for the FTP server account
-	\add key="FtpUserName" value="backupUser"
+	/ add key="FtpUserName" value="backupUser"
 
 - Password for the FTP server user
-	\add key="FtpPassword" value="password"
+	/ add key="FtpPassword" value="password"
 
 - Select active or passive file transfer
-	\add key="FtpMode" value="active"
+	/ add key="FtpMode" value="active"
 
 - Usually port 21 for active and port 990 for passive but not necessarily
-	\add key="FtpPort" value="21"
+	/ add key="FtpPort" value="21"
 
 - Select encrypted or unencrypted file transfer
-	\add key="FtpSsl" value="false"
+	/ add key="FtpSsl" value="false"
 
 - Use the SMTP mail service to send log notifications
-	\add key="SmtpService" value="true"
+	/ add key="SmtpService" value="true"
 
 - SMTP user account name
-	\add key="SmptUserName" value="services"
+	/ add key="SmptUserName" value="services"
 
 - SMTP user account password
-	\add key="SmptPassword" value="password"
+	/ add key="SmptPassword" value="password"
 
 - Domain name of the SMTP server
-	\add key="SmptHost" value="mail-server.com"
+	/ add key="SmptHost" value="mail-server.com"
 
 - SMTP server access port - Usually port 25 for unencrypted transfer
-	\add key="SmptPort" value="25"
+	/ add key="SmptPort" value="25"
 
 - Select encrypted or unencrypted file transfer
-	\add key="SmtpSsl" value="false"
+	/ add key="SmtpSsl" value="false"
 
 - Email sender address
-	\add key="SmtpSender" value="services@mail-server.com"
+	/ add key="SmtpSender" value="services@mail-server.com"
 
 - Email recipient address
-	\add key="SmtpRecipient" value="admin@mail-server.com"
+	/ add key="SmtpRecipient" value="admin@mail-server.com"
 
 -----------------------
 
