@@ -1,31 +1,20 @@
 ﻿
-using System;
-using System.Threading.Tasks;
+using System.ServiceProcess;
 
 namespace ServerBackupUtility
 {
     static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            try
-            {
-                MainAsync(args).GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                LogService.LogEventAsync("Error: Program.Main - " + ex.Message).ConfigureAwait(false);
-                Environment.Exit(127);
-            }
+            ServiceBase[] ServicesToRun;
 
-            Environment.Exit(0);
+            ServicesToRun = new ServiceBase[] 
+			                { 
+				                new Startup() 
+			                };
 
-        }
-
-        private static Task MainAsync(string[] args)
-        {
-            IServerBackupService serverBackupUtility = new ServerBackupService();
-            return serverBackupUtility.RunServerBackupAsync();
+            ServiceBase.Run(ServicesToRun);
         }
     }
 }

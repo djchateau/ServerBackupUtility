@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Server Backup Utility")]
 [assembly: AssemblyDescription("Utility Application to Backup Files from a Windows Server to an FTP Server")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Quality Software")]
+[assembly: AssemblyCompany("Quality Software Ltd")]
 [assembly: AssemblyProduct("ServerBackupUtility")]
 [assembly: AssemblyCopyright("Copyright © 2016-2018 - Quality Software Ltd")]
 [assembly: AssemblyTrademark("")]
