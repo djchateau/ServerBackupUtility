@@ -31,7 +31,11 @@ ECHO.
 ECHO.
 ECHO Installing the Windows Scheduler Service.
 ECHO.
-SC create BackupScheduler binPath= %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe start= auto
+SC create BackupScheduler binPath= %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe start= auto obj= NetworkService DisplayName= Server Backup Utility
+ECHO.
+TIMEOUT /T 10 /NOBREAK
+ECHO.
+SC start Backup Scheduler
 ECHO.
 ECHO The Server Backup Utility installation is complete.
 ECHO.

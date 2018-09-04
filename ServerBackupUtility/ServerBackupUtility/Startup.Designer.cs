@@ -1,9 +1,11 @@
 ﻿
+using System.ComponentModel;
+
 namespace ServerBackupUtility
 {
     partial class Startup
     {
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         protected override void Dispose(bool disposing)
         {
@@ -17,8 +19,8 @@ namespace ServerBackupUtility
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Startup";
+            components = new Container();
+            this.ServiceName = "BackupScheduler";
         }
     }
 }

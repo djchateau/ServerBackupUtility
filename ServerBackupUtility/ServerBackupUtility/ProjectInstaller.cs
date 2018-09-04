@@ -1,11 +1,13 @@
 ﻿
 using System.Collections;
 using System.ComponentModel;
+using System.Configuration.Install;
+using System.ServiceProcess;
 
 namespace ServerBackupUtility
 {
     [RunInstaller(true)]
-    public partial class ProjectInstaller : System.Configuration.Install.Installer
+    public partial class ProjectInstaller : Installer
     {
         public ProjectInstaller()
         {
@@ -16,7 +18,7 @@ namespace ServerBackupUtility
         {
             base.OnAfterInstall(savedState);
 
-            using (System.ServiceProcess.ServiceController serviceController = new System.ServiceProcess.ServiceController(serviceInstaller1.ServiceName))
+            using (ServiceController serviceController = new ServiceController(serviceInstaller1.ServiceName))
             {
                 serviceController.Start();
             }

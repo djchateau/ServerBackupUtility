@@ -18,21 +18,21 @@ namespace ServerBackupUtility
 
         protected override void OnStart(string[] args)
         {
-            WriteToLog("Schedule Service Started {0}");
-            ScheduleService();
+            WriteToLog("Scheduler Service Started");
+            SchedulerService();
         }
 
         protected override void OnStop()
         {
-            WriteToLog("Schedule Service Stopped {0}");
+            WriteToLog("Scheduler Service Stopped");
             _schedular.Dispose();
         }
 
-        public void ScheduleService()
+        public void SchedulerService()
         {
             try
             {
-                _schedular = new Timer(new TimerCallback(SchedularCallback));
+                _schedular = new Timer(new TimerCallback(SchedulerCallback));
 
                 if (DateTime.Now.ToLocalTime() > _time)
                 {
@@ -41,9 +41,9 @@ namespace ServerBackupUtility
                 }
 
                 TimeSpan timeSpan = _time.Subtract(DateTime.Now.ToLocalTime());
-                string schedule = String.Format("{0} day(s) {1} hour(s) {2} minute(s) {3} seconds(s)", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+                string schedule = String.Format("{0} days {1} hours {2} minutes {3} seconds", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 
-                WriteToLog("Schedule Service Scheduled to Run at: " + schedule + " {0}");
+                WriteToLog(String.Format("Scheduler Service Scheduled to Run in: {0}", schedule));
 
                 // Get the difference in minutes between the scheduled time and the current time.
                 int minutes = Convert.ToInt32(timeSpan.TotalMilliseconds);
@@ -53,26 +53,26 @@ namespace ServerBackupUtility
             }
             catch (Exception ex)
             {
-                WriteToLog("Schedule Service Error on: {0} " + ex.Message);
+                WriteToLog(String.Format("Scheduler Service Error: {0}", ex.Message));
 
                 // Stop the Windows service.
-                using (var serviceController = new ServiceController("ScheduleService"))
+                using (var serviceController = new ServiceController("BackupScheduler"))
                 {
                     serviceController.Stop();
                 }
             }
         }
 
-        private void SchedularCallback(object e)
+        private void SchedulerCallback(object e)
         {
-            WriteToLog("Begin Backup Session: {0}");
+            WriteToLog("Begin Backup Session");
             BackupController backupController = new BackupController();
-            backupController.RunBackupAsync().ConfigureAwait(false);
+            backupController.RunBackup();
         }
 
         private void WriteToLog(string message)
         {
-            LogService.CreateLogAsync("New Daily Log Created").ConfigureAwait(false);
+            LogService.CreateLogAsync("Daily Log Created").ConfigureAwait(false);
             LogService.LogEventAsync(message).ConfigureAwait(false);
         }
     }

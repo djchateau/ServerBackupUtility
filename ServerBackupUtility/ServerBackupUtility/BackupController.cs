@@ -1,6 +1,5 @@
 ﻿
 using System.Net;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility
 {
@@ -21,21 +20,21 @@ namespace ServerBackupUtility
             _smtpService = new SmtpService();
         }
 
-        public async Task RunBackupAsync()
+        public void RunBackup()
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            await LogService.CreateLogAsync("Begin Scheduled Global Server Backup");
-            await _archiveService.CreateArchivesAsync();
-            await LogService.LogEventAsync();
-            await _ftpService.InitializeFtpAsync();
-            await LogService.LogEventAsync();
-            await _uploadService.UploadBackupFilesAsync(_ftpService);
-            await LogService.LogEventAsync();
-            await _databaseService.BackupDatabasesAsync(_ftpService);
-            await LogService.LogEventAsync("End Scheduled Global Server Backup");
-            await LogService.LogEventAsync();
-            await _smtpService.CreateSmtpMessgeAsync();
+            LogService.CreateLogAsync("Scheduled Global Server Backup").ConfigureAwait(false);
+            _archiveService.CreateArchivesAsync().ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(false);
+            _ftpService.InitializeFtpAsync().ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(false);
+            _uploadService.UploadBackupFilesAsync(_ftpService).ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(false);
+            _databaseService.BackupDatabasesAsync(_ftpService).ConfigureAwait(false);
+            LogService.LogEventAsync("End Scheduled Global Server Backup").ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(false);
+            _smtpService.CreateSmtpMessgeAsync().ConfigureAwait(false);
         }
     }
 }

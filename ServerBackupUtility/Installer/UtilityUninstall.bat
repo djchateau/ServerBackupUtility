@@ -11,6 +11,9 @@ PAUSE
 ECHO.
 ECHO Uninstalling the Server Backup Utility.
 ECHO.
+SC stop BackupScheduler 4:5:3
+TIMEOUT /T 10 /NOBREAK
+ECHO.
 SC delete BackupScheduler
 ECHO.
 ECHO Removing installation files.
