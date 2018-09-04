@@ -13,7 +13,7 @@ namespace ServerBackupUtility
             InitializeComponent();
         }
 
-        private Timer _schedular = null;
+        private Timer _scheduler = null;
         private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Time"]);
 
         protected override void OnStart(string[] args)
@@ -25,14 +25,14 @@ namespace ServerBackupUtility
         protected override void OnStop()
         {
             WriteToLog("Scheduler Service Stopped");
-            _schedular.Dispose();
+            _scheduler.Dispose();
         }
 
         public void SchedulerService()
         {
             try
             {
-                _schedular = new Timer(new TimerCallback(SchedulerCallback));
+                _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
                 if (DateTime.Now.ToLocalTime() > _time)
                 {
@@ -49,7 +49,7 @@ namespace ServerBackupUtility
                 int minutes = Convert.ToInt32(timeSpan.TotalMilliseconds);
 
                 // Change the timer's due time.
-                _schedular.Change(minutes, Timeout.Infinite);
+                _scheduler.Change(minutes, Timeout.Infinite);
             }
             catch (Exception ex)
             {

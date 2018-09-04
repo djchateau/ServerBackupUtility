@@ -9,7 +9,12 @@ namespace ServerBackupUtility
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && _scheduler != null)
+            {
+                _scheduler.Dispose();
+            }
+
+            if (disposing && components != null)
             {
                 components.Dispose();
             }
