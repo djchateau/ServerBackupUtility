@@ -63,7 +63,6 @@ namespace ServerBackupUtility
                 if (response != null)
                 {
                     response.Close();
-                    response.Dispose();
                 }
             }
         }
@@ -123,19 +122,16 @@ namespace ServerBackupUtility
                 if (fileStream != null)
                 {
                     fileStream.Close();
-                    fileStream.Dispose();
                 }
 
                 if (requestStream != null)
                 {
                     requestStream.Close();
-                    requestStream.Dispose();
                 }
 
                 if (response != null)
                 {
                     response.Close();
-                    response.Dispose();
                 }
             }
         }

@@ -41,7 +41,6 @@ namespace ServerBackupUtility
             finally
             {
                 backupFiles.Close();
-                backupFiles.Dispose();
             }
 
             try

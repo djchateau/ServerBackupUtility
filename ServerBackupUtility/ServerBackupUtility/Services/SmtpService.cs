@@ -36,10 +36,8 @@ namespace ServerBackupUtility
                 finally
                 {
                     streamReader.Close();
-                    streamReader.Dispose();
 
                     fileStream.Close();
-                    fileStream.Dispose();
                 }
             }
         }

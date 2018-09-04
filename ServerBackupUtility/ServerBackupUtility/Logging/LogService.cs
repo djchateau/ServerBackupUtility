@@ -18,14 +18,19 @@ namespace ServerBackupUtility
                 Directory.CreateDirectory(Path + "\\LogFiles");
             }
 
-            FileStream fileStream = new FileStream(Path + "\\LogFiles\\" + DateTime + ".txt", FileMode.Create, FileAccess.Write, FileShare.Write);
+            FileStream fileStream = null;
 
             try
             {
-                string formattedMessage = System.DateTime.Now.ToString("G") + " - " + message + "\r\n\r\n";
-                byte[] messageBytes = Encoding.UTF8.GetBytes(formattedMessage);
+                if (!File.Exists(Path + "\\LogFiles\\" + DateTime + ".txt"))
+                {
+                    fileStream = new FileStream(Path + "\\LogFiles\\" + DateTime + ".txt", FileMode.Create, FileAccess.Write, FileShare.Write);
 
-                await fileStream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                    string formattedMessage = System.DateTime.Now.ToString("G") + " - " + message + "\r\n\r\n";
+                    byte[] messageBytes = Encoding.UTF8.GetBytes(formattedMessage);
+
+                    await fileStream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                }
             }
             catch (Exception ex)
             {
@@ -34,7 +39,6 @@ namespace ServerBackupUtility
             finally
             {
                 fileStream.Close();
-                fileStream.Dispose();
             }
         }
 
@@ -71,7 +75,6 @@ namespace ServerBackupUtility
             finally
             {
                 fileStream.Close();
-                fileStream.Dispose();
             }
         }
 
@@ -93,7 +96,6 @@ namespace ServerBackupUtility
             finally
             {
                 fileStream.Close();
-                fileStream.Dispose();
             }
         }
     }
