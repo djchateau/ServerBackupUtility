@@ -29,6 +29,10 @@ ECHO.
 ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant NetworkService:(OI)M
 ECHO.
 ECHO.
+ECHO Installing the Windows Scheduler Service.
+ECHO.
+SC create BackupScheduler binPath= %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe start= auto
+ECHO.
 ECHO The Server Backup Utility installation is complete.
 ECHO.
 PAUSE

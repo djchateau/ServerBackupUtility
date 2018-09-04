@@ -11,6 +11,8 @@ PAUSE
 ECHO.
 ECHO Uninstalling the Server Backup Utility.
 ECHO.
+SC delete BackupScheduler
+ECHO.
 ECHO Removing installation files.
 ECHO.
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupFiles.txt
