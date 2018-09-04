@@ -63,7 +63,7 @@ namespace ServerBackupUtility
             }
 
             Console.WriteLine();
-            Console.WriteLine("Service is Completely Stopped");
+            Console.WriteLine("Server Backup Utility Has Finished");
 
             // Waiting a key press to not return to VS directly
             if (System.Diagnostics.Debugger.IsAttached)
