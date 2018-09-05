@@ -14,6 +14,7 @@ namespace ServerBackupUtility
         }
 
         private Timer _scheduler = null;
+        private byte _days = Convert.ToByte(ConfigurationManager.AppSettings["Days"]);
         private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Time"]);
 
         protected override void OnStart(string[] args)
@@ -34,10 +35,16 @@ namespace ServerBackupUtility
             {
                 _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
+                if (_time > DateTime.Parse("23:45") && _time < DateTime.Parse("00:00"))
+                {
+                    _time = DateTime.Parse("00:00");
+                }
+
+
                 if (DateTime.Now.ToLocalTime() > _time)
                 {
-                    // If scheduled time is passed, set schedule for the next day.
-                    _time = _time.AddDays(1);
+                    // If scheduled time is passed, set schedule for the next scheduled day.
+                    _time = _time.AddDays(_days);
                 }
 
                 TimeSpan timeSpan = _time.Subtract(DateTime.Now.ToLocalTime());

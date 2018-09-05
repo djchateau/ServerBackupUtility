@@ -11,9 +11,9 @@ namespace ServerBackupUtility
         {
             ServiceBase[] ServicesToRun;
 
-            ServicesToRun = new ServiceBase[] 
-			                { 
-				                new Startup() 
+            ServicesToRun = new ServiceBase[]
+			                {
+				                new Startup()
 			                };
 
             if (Environment.UserInteractive && System.Diagnostics.Debugger.IsAttached)
@@ -63,7 +63,7 @@ namespace ServerBackupUtility
             }
 
             Console.WriteLine();
-            Console.WriteLine("Server Backup Utility Has Finished");
+            Console.WriteLine("Server Backup Utility Has Completed");
 
             // Waiting a key press to not return to VS directly
             if (System.Diagnostics.Debugger.IsAttached)
