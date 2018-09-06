@@ -8,19 +8,23 @@ namespace ServerBackupUtility
 {
     public partial class Startup : ServiceBase
     {
+        private Timer _scheduler = null;
+        private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
+        private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
+        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
+        private readonly int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
+        private readonly RestartService _restartService = new RestartService();
+
         public Startup()
         {
             InitializeComponent();
         }
 
-        private Timer _scheduler = null;
-        private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
-        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
-        private readonly int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
 
         protected override void OnStart(string[] args)
         {
             WriteToLog("Scheduler Service Started");
+            _restartService.WatchAppConfig();
             SchedulerService();
         }
 

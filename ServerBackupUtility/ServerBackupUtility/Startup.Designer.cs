@@ -24,8 +24,8 @@ namespace ServerBackupUtility
 
         private void InitializeComponent()
         {
-            components = new Container();
             this.ServiceName = "BackupScheduler";
+
         }
     }
 }
