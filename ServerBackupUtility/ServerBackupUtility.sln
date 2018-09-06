@@ -7,8 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBackupUtility", "Serv
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{E9E580A3-286D-4FB4-92B7-BFCA655C23C0}"
 	ProjectSection(SolutionItems) = preProject
-		Installer\Instructions.txt = Installer\Instructions.txt
 		Installer\License.txt = Installer\License.txt
+		Installer\Readme.txt = Installer\Readme.txt
 		Installer\UtilityInstall.bat = Installer\UtilityInstall.bat
 		Installer\UtilityUninstall.bat = Installer\UtilityUninstall.bat
 	EndProjectSection
