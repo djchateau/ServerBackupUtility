@@ -1,8 +1,14 @@
 D:\csvn\data\dumps\backup\*.zip
+<<<<<<< HEAD
 D:\csvn\data\dumps\clikitysplit\*.zip
 D:\csvn\data\dumps\console\*.zip
 D:\csvn\data\dumps\entity-management\*.zip
 D:\csvn\data\dumps\hmn\*.zip
+=======
+D:\csvn\data\dumps\console\*.zip
+D:\csvn\data\dumps\entities\*.zip
+D:\csvn\data\dumps\manage\*.zip
+>>>>>>> f9e4e6e... Modify Readme Instructions
 D:\csvn\data\dumps\identity\*.zip
 D:\csvn\data\dumps\maps\*.zip
 D:\csvn\data\dumps\misc\*.zip
