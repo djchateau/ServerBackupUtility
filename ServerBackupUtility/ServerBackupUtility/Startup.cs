@@ -14,8 +14,9 @@ namespace ServerBackupUtility
         }
 
         private Timer _scheduler = null;
-        private byte _days = Convert.ToByte(ConfigurationManager.AppSettings["Days"]);
-        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Time"]);
+        private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
+        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
+        private readonly int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
 
         protected override void OnStart(string[] args)
         {
@@ -35,16 +36,31 @@ namespace ServerBackupUtility
             {
                 _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
-                if (_time > DateTime.Parse("23:45") && _time < DateTime.Parse("00:00"))
+                switch (_mode)
                 {
-                    _time = DateTime.Parse("00:00");
-                }
+                    case "clock":
+                        if (_time > DateTime.Parse("23:45") && _time < DateTime.Parse("00:00"))
+                        {
+                            _time = DateTime.Parse("00:00");
+                        }
 
+                        if (DateTime.Now.ToLocalTime() > _time)
+                        {
+                            // If scheduled time is passed, set schedule for the next day.
+                            _time = _time.AddDays(1);
+                        }
 
-                if (DateTime.Now.ToLocalTime() > _time)
-                {
-                    // If scheduled time is passed, set schedule for the next scheduled day.
-                    _time = _time.AddDays(_days);
+                        break;
+
+                    case "interval":
+                        _time = DateTime.Now.ToLocalTime().AddMinutes(_minutes);
+
+                        if (DateTime.Now.ToLocalTime() > _time)
+                        {
+                            _time = _time.AddMinutes(_minutes);
+                        }
+
+                        break;
                 }
 
                 TimeSpan timeSpan = _time.Subtract(DateTime.Now.ToLocalTime());
@@ -63,7 +79,7 @@ namespace ServerBackupUtility
                 WriteToLog(String.Format("Scheduler Service Error: {0}", ex.Message));
 
                 // Stop the Windows service.
-                using (var serviceController = new ServiceController("BackupScheduler"))
+                using (ServiceController serviceController = new ServiceController("BackupScheduler"))
                 {
                     serviceController.Stop();
                 }
