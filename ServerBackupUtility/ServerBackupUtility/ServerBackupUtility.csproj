@@ -142,6 +142,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\IRestartService.cs" />
     <Compile Include="Services\RestartService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\EmailService.cs" />

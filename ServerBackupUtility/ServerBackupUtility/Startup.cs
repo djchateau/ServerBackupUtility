@@ -15,7 +15,7 @@ namespace ServerBackupUtility
         private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
         private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
         private readonly int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
-        private readonly RestartService _restartService = new RestartService();
+        private readonly IRestartService _restartService = new RestartService();
 
         public Startup()
         {

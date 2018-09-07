@@ -24,6 +24,7 @@ namespace ServerBackupUtility.Services
 
                     await LogService.LogEventAsync("Uploading DataBase To FTP Server: " + dbName);
                     await ftpService.UploadFileAsync(dbFilePath);
+                    File.Delete(dbFilePath);
                 }
             }
             catch (Exception ex)

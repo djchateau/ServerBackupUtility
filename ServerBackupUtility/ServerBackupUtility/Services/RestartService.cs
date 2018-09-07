@@ -6,7 +6,7 @@ using System.ServiceProcess;
 
 namespace ServerBackupUtility.Services
 {
-    public class RestartService
+    public class RestartService : IRestartService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private void FileSystemEventHandler(object sender, FileSystemEventArgs e) => RestartWindowsService("BackupScheduler");
