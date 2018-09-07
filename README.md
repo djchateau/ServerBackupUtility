@@ -41,7 +41,7 @@ using SearchOptions.TopDirectoriesOnly.
 
 Pattern Match
 ---------------------
-\* = wildcard match (matches anything)
+\* = wildcard match (matches anything) \
 ? = character match (matches one character)
 
 - Back-up all files in the \console folder \
