@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Logging
 {
     public static class LogService
     {

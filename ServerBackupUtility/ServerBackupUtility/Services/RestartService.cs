@@ -1,9 +1,10 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.IO;
 using System.ServiceProcess;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class RestartService
     {

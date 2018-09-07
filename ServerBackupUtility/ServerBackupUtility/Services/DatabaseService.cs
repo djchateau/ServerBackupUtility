@@ -1,10 +1,11 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class DatabaseService : IDatabaseService
     {

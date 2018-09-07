@@ -1,4 +1,6 @@
 ﻿
+using ServerBackupUtility.Logging;
+using ServerBackupUtility.Services;
 using System;
 using System.Configuration;
 using System.ServiceProcess;

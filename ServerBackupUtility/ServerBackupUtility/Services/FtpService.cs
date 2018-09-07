@@ -1,4 +1,5 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Net.Cache;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class FtpService : IFtpService
     {
