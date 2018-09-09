@@ -1,6 +1,7 @@
 ﻿
 using ServerBackupUtility.Logging;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
@@ -15,15 +16,18 @@ namespace ServerBackupUtility.Services
         {
             await LogService.LogEventAsync("Reading Database File Paths");
 
+            IEnumerable<String> dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
+
             try
             {
-                foreach (var dbFilePath in Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories))
+                foreach (var dbFilePath in dbFilePaths)
                 {
                     int index = dbFilePath.Trim().LastIndexOf('\\');
                     string dbName = dbFilePath.Trim().Substring(index + 1);
 
                     await LogService.LogEventAsync("Uploading DataBase To FTP Server: " + dbName);
                     await ftpService.UploadFileAsync(dbFilePath);
+                    await Task.Delay(1000);
                     File.Delete(dbFilePath);
                 }
             }

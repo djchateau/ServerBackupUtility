@@ -26,17 +26,17 @@ namespace ServerBackupUtility
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            LogService.LogEventAsync().ConfigureAwait(false);
-            _archiveService.CreateArchivesAsync().ConfigureAwait(false);
-            LogService.LogEventAsync().ConfigureAwait(false);
-            _ftpService.InitializeFtpAsync().ConfigureAwait(false);
-            LogService.LogEventAsync().ConfigureAwait(false);
-            _uploadService.UploadBackupFilesAsync(_ftpService).ConfigureAwait(false);
-            LogService.LogEventAsync().ConfigureAwait(false);
-            _databaseService.BackupDatabasesAsync(_ftpService).ConfigureAwait(false);
-            LogService.LogEventAsync("End Scheduled Global Server Backup").ConfigureAwait(false);
-            LogService.LogEventAsync().ConfigureAwait(false);
-            _smtpService.CreateSmtpMessgeAsync().ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(true);
+            _archiveService.CreateArchivesAsync().ConfigureAwait(true);
+            LogService.LogEventAsync().ConfigureAwait(true);
+            _ftpService.InitializeFtpAsync().ConfigureAwait(true);
+            LogService.LogEventAsync().ConfigureAwait(true);
+            _uploadService.UploadBackupFilesAsync(_ftpService).ConfigureAwait(true);
+            LogService.LogEventAsync().ConfigureAwait(true);
+            _databaseService.BackupDatabasesAsync(_ftpService).ConfigureAwait(true);
+            LogService.LogEventAsync("End Scheduled Global Server Backup").ConfigureAwait(true);
+            LogService.LogEventAsync().ConfigureAwait(true);
+            _smtpService.CreateSmtpMessgeAsync().ConfigureAwait(true);
         }
     }
 }

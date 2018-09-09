@@ -1,9 +1,11 @@
 ﻿
 using ServerBackupUtility.Logging;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
@@ -23,7 +25,9 @@ namespace ServerBackupUtility.Services
             {
                 foreach (var folderPath in folderPaths)
                 {
-                    foreach (var directoryPath in Directory.EnumerateDirectories(folderPath, "*", SearchOption.TopDirectoryOnly))
+                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(folderPath, "*", SearchOption.TopDirectoryOnly);
+
+                    foreach (var directoryPath in directoryPaths)
                     {
                         int index = directoryPath.Trim().LastIndexOf('\\');
                         string directoryName = directoryPath.Trim().Substring(index);
@@ -33,10 +37,10 @@ namespace ServerBackupUtility.Services
                         if (File.Exists(_archivePath + directoryName + ".zip"))
                         {
                             File.Delete(_archivePath + directoryName + ".zip");
-                            await Task.Delay(1000);
+                            Thread.Sleep(1000);
                         }
 
-                        await Task.Run(() => ZipFile.CreateFromDirectory(directoryPath, _archivePath + directoryName + ".zip", CompressionLevel.Optimal, true));
+                        ZipFile.CreateFromDirectory(directoryPath, _archivePath + directoryName + ".zip", CompressionLevel.Optimal, true));
                     }
                 }
             }

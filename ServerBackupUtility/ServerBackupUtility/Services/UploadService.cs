@@ -54,7 +54,9 @@ namespace ServerBackupUtility.Services
                         string filePattern = backupPath.Trim().Substring(index1 + 1);
                         string folderPath = backupPath.Trim().Substring(0, index1);
 
-                        foreach (var filePath in Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories))
+                        IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
+
+                        foreach (var filePath in filePaths)
                         {
                             int index2 = filePath.Trim().LastIndexOf('\\');
                             string fileName = filePath.Trim().Substring(index2 + 1);
