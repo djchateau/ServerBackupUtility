@@ -77,7 +77,6 @@ namespace ServerBackupUtility.Services
             X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
 
             FileStream fileStream = null;
-            Stream requestStream = null;
             FtpWebResponse response = null;
 
             try
@@ -94,11 +93,11 @@ namespace ServerBackupUtility.Services
                 request.UseBinary = true;
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
+                fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                Stream requestStream = request.GetRequestStream();
+
                 byte[] buffer = new byte[32768];
                 int readBytes = 0;
-
-                requestStream = request.GetRequestStream();
-                fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
                 do
                 {
@@ -106,6 +105,8 @@ namespace ServerBackupUtility.Services
                     requestStream.Write(buffer, 0, readBytes);
                 }
                 while (readBytes != 0);
+
+                requestStream.Close();
 
                 response = (FtpWebResponse) request.GetResponse();
                 LogService.LogEvent("FTP Server Response: " + response.StatusDescription);
@@ -120,11 +121,6 @@ namespace ServerBackupUtility.Services
                 if (fileStream != null)
                 {
                     fileStream.Close();
-                }
-
-                if (requestStream != null)
-                {
-                    requestStream.Close();
                 }
 
                 if (response != null)

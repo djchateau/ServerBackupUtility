@@ -18,13 +18,13 @@ namespace ServerBackupUtility.Services
         {
             LogService.LogEvent("Reading Web Folder Paths");
 
-            string[] compressionPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] folderPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
 
             try
             {
-                foreach (var compressionPath in compressionPaths)
+                foreach (var folderPath in folderPaths)
                 {
-                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(compressionPath, "*", SearchOption.TopDirectoryOnly);
+                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(folderPath, "*", SearchOption.TopDirectoryOnly);
 
                     foreach (var directoryPath in directoryPaths)
                     {

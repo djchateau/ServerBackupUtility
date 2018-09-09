@@ -1,4 +1,6 @@
 
+using System.Threading.Tasks;
+
 namespace ServerBackupUtility.Services
 {
     public interface IFtpService

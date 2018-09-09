@@ -24,7 +24,6 @@ namespace ServerBackupUtility.Services
             try
             {
                 string line;
-
                 backupPaths = new Collection<String>();
 
                 while ((line = backupFiles.ReadLine()) != null)
@@ -32,7 +31,7 @@ namespace ServerBackupUtility.Services
                     backupPaths.Add(line);
                 }
 
-                backupPaths.Add(_archivePath);
+                backupPaths.Add(_archivePath + "\\*");
             }
             catch (Exception ex)
             {
@@ -52,8 +51,6 @@ namespace ServerBackupUtility.Services
                         int index1 = backupPath.Trim().LastIndexOf('\\');
                         string filePattern = backupPath.Trim().Substring(index1 + 1);
                         string folderPath = backupPath.Trim().Substring(0, index1);
-
-                        filePattern = filePattern == String.Empty ? "*" : filePattern;
 
                         IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.TopDirectoryOnly);
 
