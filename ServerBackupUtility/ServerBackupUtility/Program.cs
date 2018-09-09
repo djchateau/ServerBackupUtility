@@ -41,7 +41,7 @@ namespace ServerBackupUtility
             foreach (ServiceBase service in servicesToRun)
             {
                 Console.Write(service.ServiceName);
-                onStartMethod.Invoke(service, new object[] { new string[] { } });
+                onStartMethod.Invoke(service, new object[] { new string[] { "debug" } });
                 Console.WriteLine(" Started");
             }
 
