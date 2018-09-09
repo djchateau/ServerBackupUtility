@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Logging
 {
@@ -11,7 +10,7 @@ namespace ServerBackupUtility.Logging
         private static readonly string Path = AppDomain.CurrentDomain.BaseDirectory;
         private static readonly string DateTime = System.DateTime.Now.ToString("yy-MM-dd");
 
-        public static async Task CreateLogAsync(string message)
+        public static void CreateLog(string message)
         {
             if (!Directory.Exists(Path + "\\LogFiles"))
             {
@@ -29,12 +28,12 @@ namespace ServerBackupUtility.Logging
                     string formattedMessage = System.DateTime.Now.ToString("G") + " - " + message + "\r\n\r\n";
                     byte[] messageBytes = Encoding.UTF8.GetBytes(formattedMessage);
 
-                    await fileStream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                    fileStream.Write(messageBytes, 0, messageBytes.Length);
                 }
             }
             catch (Exception ex)
             {
-                await LogEventAsync("Error: LogService.CreateLogAsync - " + ex.Message);
+                LogEvent("Error: LogService.CreateLogAsync - " + ex.Message);
             }
             finally
             {
@@ -42,12 +41,12 @@ namespace ServerBackupUtility.Logging
             }
         }
 
-        public static Task LogEventAsync()
+        public static void LogEvent()
         {
-            return LogEventAsync(null);
+            LogEvent(null);
         }
 
-        public static async Task LogEventAsync(string message)
+        public static void LogEvent(string message)
         {
             FileStream fileStream = new FileStream(Path + "\\LogFiles\\" + DateTime + ".txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
 
@@ -66,11 +65,11 @@ namespace ServerBackupUtility.Logging
 
                 byte[] messageBytes = Encoding.UTF8.GetBytes(formattedMessage);
 
-                await fileStream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                fileStream.Write(messageBytes, 0, messageBytes.Length);
             }
             catch (Exception ex)
             {
-                await LogEventAsync("Error: LogService.LogEventAsync - " + ex.Message);
+                LogEvent("Error: LogService.LogEventAsync - " + ex.Message);
             }
             finally
             {
@@ -78,7 +77,7 @@ namespace ServerBackupUtility.Logging
             }
         }
 
-        public static async Task LogSmtpErrorAsync(string message)
+        public static void LogSmtpError(string message)
         {
             FileStream fileStream = new FileStream(Path + "\\LogFiles\\SmtpErrorLog.txt", FileMode.Append, FileAccess.Write, FileShare.Read);
 
@@ -87,11 +86,11 @@ namespace ServerBackupUtility.Logging
                 string formattedMessage = System.DateTime.Now.ToString("G") + " - " + message + "\r\n\r\n";
                 byte[] messageBytes = Encoding.UTF8.GetBytes(formattedMessage);
 
-                await fileStream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                fileStream.Write(messageBytes, 0, messageBytes.Length);
             }
             catch (Exception ex)
             {
-                await LogEventAsync("Error: LogService.LogSmtpErrorAsync - " + ex.Message);
+                LogEvent("Error: LogService.LogSmtpErrorAsync - " + ex.Message);
             }
             finally
             {

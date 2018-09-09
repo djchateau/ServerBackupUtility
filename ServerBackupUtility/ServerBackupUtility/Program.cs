@@ -42,7 +42,7 @@ namespace ServerBackupUtility
             {
                 Console.Write(service.ServiceName);
                 onStartMethod.Invoke(service, new object[] { new string[] { "debug" } });
-                Console.WriteLine(" Started");
+                Console.WriteLine(" Will Start in 1 Minute");
             }
 
             // Waiting for the end

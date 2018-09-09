@@ -5,7 +5,7 @@ using System.Net;
 
 namespace ServerBackupUtility
 {
-    public partial class BackupController
+    public class BackupController
     {
         private readonly IArchiveService _archiveService;
         private readonly IFtpService _ftpService;
@@ -26,17 +26,17 @@ namespace ServerBackupUtility
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            LogService.LogEventAsync().ConfigureAwait(true);
-            _archiveService.CreateArchivesAsync().ConfigureAwait(true);
-            LogService.LogEventAsync().ConfigureAwait(true);
-            _ftpService.InitializeFtpAsync().ConfigureAwait(true);
-            LogService.LogEventAsync().ConfigureAwait(true);
-            _uploadService.UploadBackupFilesAsync(_ftpService).ConfigureAwait(true);
-            LogService.LogEventAsync().ConfigureAwait(true);
-            _databaseService.BackupDatabasesAsync(_ftpService).ConfigureAwait(true);
-            LogService.LogEventAsync("End Scheduled Global Server Backup").ConfigureAwait(true);
-            LogService.LogEventAsync().ConfigureAwait(true);
-            _smtpService.CreateSmtpMessgeAsync().ConfigureAwait(true);
+            LogService.LogEvent();
+            _archiveService.CreateArchives();
+            LogService.LogEvent();
+            _ftpService.InitializeFtp();
+            LogService.LogEvent();
+            _uploadService.UploadBackupFiles(_ftpService);
+            LogService.LogEvent();
+            _databaseService.BackupDatabases(_ftpService);
+            LogService.LogEvent("End Scheduled Global Server Backup");
+            LogService.LogEvent();
+            _smtpService.CreateSmtpMessge();
         }
     }
 }

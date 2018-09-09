@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
 {
@@ -15,12 +14,12 @@ namespace ServerBackupUtility.Services
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"];
 
-        public async Task UploadBackupFilesAsync(IFtpService ftpService)
+        public void UploadBackupFiles(IFtpService ftpService)
         {
             StreamReader backupFiles = new StreamReader(_path + "\\ServerBackupFiles.txt", Encoding.UTF8);
             ICollection<String> backupPaths = null;
 
-            await LogService.LogEventAsync("Reading Backup File Paths");
+            LogService.LogEvent("Reading Backup File Paths");
 
             try
             {
@@ -28,7 +27,7 @@ namespace ServerBackupUtility.Services
 
                 backupPaths = new Collection<String>();
 
-                while ((line = await backupFiles.ReadLineAsync()) != null)
+                while ((line = backupFiles.ReadLine()) != null)
                 {
                     backupPaths.Add(line);
                 }
@@ -37,7 +36,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                await LogService.LogEventAsync("Error: UploadService.UploadBackupFilesAsync #1 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFilesAsync #1 - " + ex.Message);
             }
             finally
             {
@@ -61,18 +60,18 @@ namespace ServerBackupUtility.Services
                             int index2 = filePath.Trim().LastIndexOf('\\');
                             string fileName = filePath.Trim().Substring(index2 + 1);
 
-                            await LogService.LogEventAsync("Uploading Backup Files To FTP Server: " + fileName);
-                            await ftpService.UploadFileAsync(filePath);
+                            LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
+                            ftpService.UploadFile(filePath);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                await LogService.LogEventAsync("Error: UploadService.UploadBackupFilesAsync #2 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFilesAsync #2 - " + ex.Message);
             }
 
-            await LogService.LogEventAsync("Finishing Backup Files Process");
+            LogService.LogEvent("Finishing Backup Files Process");
         }
     }
 }

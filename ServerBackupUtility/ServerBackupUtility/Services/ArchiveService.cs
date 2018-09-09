@@ -6,7 +6,6 @@ using System.Configuration;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
 {
@@ -15,9 +14,9 @@ namespace ServerBackupUtility.Services
         private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"];
         private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"];
 
-        public async Task CreateArchivesAsync()
+        public void CreateArchives()
         {
-            await LogService.LogEventAsync("Reading Web Folder Paths");
+            LogService.LogEvent("Reading Web Folder Paths");
 
             string[] folderPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -32,7 +31,7 @@ namespace ServerBackupUtility.Services
                         int index = directoryPath.Trim().LastIndexOf('\\');
                         string directoryName = directoryPath.Trim().Substring(index);
 
-                        await LogService.LogEventAsync("Creating Archive: " + directoryName);
+                        LogService.LogEvent("Creating Archive: " + directoryName);
 
                         if (File.Exists(_archivePath + directoryName + ".zip"))
                         {
@@ -40,16 +39,16 @@ namespace ServerBackupUtility.Services
                             Thread.Sleep(1000);
                         }
 
-                        ZipFile.CreateFromDirectory(directoryPath, _archivePath + directoryName + ".zip", CompressionLevel.Optimal, true));
+                        ZipFile.CreateFromDirectory(directoryPath, _archivePath + directoryName + ".zip", CompressionLevel.Optimal, true);
                     }
                 }
             }
             catch (Exception ex)
             {
-                await LogService.LogEventAsync("Error: ArchiveService.CreateArchivesAsync - " + ex.Message);
+                LogService.LogEvent("Error: ArchiveService.CreateArchivesAsync - " + ex.Message);
             }
 
-            await LogService.LogEventAsync("Finishing Archive Backup Process");
+            LogService.LogEvent("Finishing Archive Backup Process");
         }
     }
 }

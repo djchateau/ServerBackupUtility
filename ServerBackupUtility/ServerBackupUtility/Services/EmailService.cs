@@ -7,7 +7,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
 {
@@ -24,7 +23,7 @@ namespace ServerBackupUtility.Services
 
         private readonly string _subject = "Daily Backup Report - " + DateTime.Now.ToLongDateString();
 
-        public async Task SendEmailAsync(string messageBody)
+        public void SendEmail(string messageBody)
         {
             X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
 
@@ -55,11 +54,11 @@ namespace ServerBackupUtility.Services
                 smtpClient.DeliveryFormat = SmtpDeliveryFormat.International;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                await smtpClient.SendMailAsync(mailMessage);
+                smtpClient.Send(mailMessage);
             }
             catch (Exception ex)
             {
-                await LogService.LogSmtpErrorAsync("Error: EmailService.SendEmailAsync - " + ex.Message);
+                LogService.LogSmtpError("Error: EmailService.SendEmailAsync - " + ex.Message);
             }
             finally
             {

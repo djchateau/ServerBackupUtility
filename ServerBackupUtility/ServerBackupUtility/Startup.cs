@@ -22,7 +22,6 @@ namespace ServerBackupUtility
             InitializeComponent();
         }
 
-
         protected override void OnStart(string[] args)
         {
             WriteToLog("Scheduler Service Started");
@@ -108,8 +107,8 @@ namespace ServerBackupUtility
 
         private void WriteToLog(string message)
         {
-            LogService.CreateLogAsync("Daily Log Created").ConfigureAwait(false);
-            LogService.LogEventAsync(message).ConfigureAwait(false);
+            LogService.CreateLog("Daily Log Created");
+            LogService.LogEvent(message);
         }
     }
 }

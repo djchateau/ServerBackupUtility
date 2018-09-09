@@ -6,7 +6,6 @@ using System.IO;
 using System.Net;
 using System.Net.Cache;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
 {
@@ -21,9 +20,9 @@ namespace ServerBackupUtility.Services
         private readonly string _userName = ConfigurationManager.AppSettings["FtpUserName"];
         private readonly string _password = ConfigurationManager.AppSettings["FtpPassword"];
 
-        public async Task InitializeFtpAsync(bool status = false)
+        public void InitializeFtp(bool status = false)
         {
-            await LogService.LogEventAsync("Contacting FTP Server For Login");
+            LogService.LogEvent("Contacting FTP Server For Login");
 
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url) : new Uri("ftp://" + _url + ':' + _port);
 
@@ -51,18 +50,18 @@ namespace ServerBackupUtility.Services
                 request.ContentLength = 0;
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
 
-                response = (FtpWebResponse)await request.GetResponseAsync();
-                await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
+                response = (FtpWebResponse) request.GetResponse();
+                LogService.LogEvent("FTP Server Response: " + response.StatusDescription);
             }
             catch (WebException ex)
             {
                 response = (FtpWebResponse)ex.Response;
-                await LogService.LogEventAsync("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
+                LogService.LogEvent("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
 
                 if (!status)
                 {
-                    await DeleteCurrentFtpFolderAsync();
-                    await InitializeFtpAsync(true);
+                    DeleteCurrentFtpFolder();
+                    InitializeFtp(true);
                 }
             }
             finally
@@ -74,7 +73,7 @@ namespace ServerBackupUtility.Services
             }
         }
 
-        public async Task UploadFileAsync(string filePath)
+        public void UploadFile(string filePath)
         {
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url) : new Uri("ftp://" + _url + ':' + _port);
 
@@ -106,23 +105,23 @@ namespace ServerBackupUtility.Services
                 byte[] buffer = new byte[32768];
                 int readBytes = 0;
 
-                requestStream = await request.GetRequestStreamAsync();
+                requestStream = request.GetRequestStream();
                 fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
                 do
                 {
-                    readBytes = await fileStream.ReadAsync(buffer, 0, buffer.Length);
-                    await requestStream.WriteAsync(buffer, 0, readBytes);
+                    readBytes = fileStream.Read(buffer, 0, buffer.Length);
+                    requestStream.Write(buffer, 0, readBytes);
                 }
                 while (readBytes != 0);
 
-                response = (FtpWebResponse)await request.GetResponseAsync();
-                await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
+                response = (FtpWebResponse) request.GetResponse();
+                LogService.LogEvent("FTP Server Response: " + response.StatusDescription);
             }
             catch (WebException ex)
             {
-                response = (FtpWebResponse)ex.Response;
-                await LogService.LogEventAsync("Error: FtpService.UploadFileAsync - " + response.StatusDescription);
+                response = (FtpWebResponse) ex.Response;
+                LogService.LogEvent("Error: FtpService.UploadFileAsync - " + response.StatusDescription);
             }
             finally
             {
@@ -143,9 +142,9 @@ namespace ServerBackupUtility.Services
             }
         }
 
-        public async Task DeleteCurrentFtpFolderAsync()
+        public void DeleteCurrentFtpFolder()
         {
-            await LogService.LogEventAsync("Deleting Current FTP Folder");
+            LogService.LogEvent("Deleting Current FTP Folder");
 
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url) : new Uri("ftp://" + _url + ':' + _port);
 
@@ -173,13 +172,13 @@ namespace ServerBackupUtility.Services
                 request.ContentLength = 0;
                 request.Method = WebRequestMethods.Ftp.RemoveDirectory;
 
-                response = (FtpWebResponse)await request.GetResponseAsync();
-                await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
+                response = (FtpWebResponse) request.GetResponse();
+                LogService.LogEvent("FTP Server Response: " + response.StatusDescription);
             }
             catch (WebException ex)
             {
-                response = (FtpWebResponse)ex.Response;
-                await LogService.LogEventAsync("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
+                response = (FtpWebResponse) ex.Response;
+                LogService.LogEvent("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
             }
             finally
             {

@@ -40,7 +40,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEventAsync("RestartService.RestartWindowsService - " + ex.Message).ConfigureAwait(false);
+                LogService.LogEvent("RestartService.RestartWindowsService - " + ex.Message);
             }
         }
     }
