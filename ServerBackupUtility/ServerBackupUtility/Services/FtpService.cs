@@ -12,7 +12,7 @@ namespace ServerBackupUtility.Services
     public class FtpService : IFtpService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _dateTime = DateTime.Now.ToString("yy-MM-dd");
+        private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");
         private readonly string _url = ConfigurationManager.AppSettings["FtpUrl"];
         private readonly string _port = ConfigurationManager.AppSettings["FtpPort"];
         private readonly string _mode = ConfigurationManager.AppSettings["FtpMode"];

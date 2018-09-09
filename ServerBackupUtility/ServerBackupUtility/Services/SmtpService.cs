@@ -10,7 +10,7 @@ namespace ServerBackupUtility.Services
     public class SmtpService : ISmtpService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _dateTime = DateTime.Now.ToString("yy-MM-dd");
+        private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");
         private readonly bool _smtpService = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpService"]);
 
         public void CreateSmtpMessge()
