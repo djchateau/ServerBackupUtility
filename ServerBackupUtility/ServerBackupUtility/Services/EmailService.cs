@@ -58,7 +58,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogSmtpError("Error: EmailService.SendEmailAsync - " + ex.Message);
+                LogService.LogSmtpError("Error: EmailService.SendEmail - " + ex.Message);
             }
             finally
             {

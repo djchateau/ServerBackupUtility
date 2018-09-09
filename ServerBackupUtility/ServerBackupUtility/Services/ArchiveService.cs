@@ -11,8 +11,8 @@ namespace ServerBackupUtility.Services
 {
     public class ArchiveService : IArchiveService
     {
-        private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"];
-        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"];
+        private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"].Trim();
+        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
 
         public void CreateArchives()
         {
@@ -45,7 +45,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: ArchiveService.CreateArchivesAsync - " + ex.Message);
+                LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }
 
             LogService.LogEvent("Finishing Archive Backup Process");

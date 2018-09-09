@@ -31,7 +31,7 @@ namespace ServerBackupUtility.Services
                 }
                 catch (Exception ex)
                 {
-                    LogService.LogEvent("Error: SmtpService.CreateSmtpMessgeAsync - " + ex.Message);
+                    LogService.LogEvent("Error: SmtpService.CreateSmtpMessge - " + ex.Message);
                 }
                 finally
                 {

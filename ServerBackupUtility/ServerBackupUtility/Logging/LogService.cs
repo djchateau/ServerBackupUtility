@@ -33,11 +33,14 @@ namespace ServerBackupUtility.Logging
             }
             catch (Exception ex)
             {
-                LogEvent("Error: LogService.CreateLogAsync - " + ex.Message);
+                LogEvent("Error: LogService.CreateLog - " + ex.Message);
             }
             finally
             {
-                fileStream.Close();
+                if (fileStream != null)
+                {
+                    fileStream.Close();
+                }
             }
         }
 
@@ -69,7 +72,7 @@ namespace ServerBackupUtility.Logging
             }
             catch (Exception ex)
             {
-                LogEvent("Error: LogService.LogEventAsync - " + ex.Message);
+                LogEvent("Error: LogService.LogEvent - " + ex.Message);
             }
             finally
             {
@@ -90,7 +93,7 @@ namespace ServerBackupUtility.Logging
             }
             catch (Exception ex)
             {
-                LogEvent("Error: LogService.LogSmtpErrorAsync - " + ex.Message);
+                LogEvent("Error: LogService.LogSmtpError - " + ex.Message);
             }
             finally
             {

@@ -12,7 +12,7 @@ namespace ServerBackupUtility.Services
     public class UploadService : IUploadService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"];
+        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
 
         public void UploadBackupFiles(IFtpService ftpService)
         {
@@ -24,7 +24,6 @@ namespace ServerBackupUtility.Services
             try
             {
                 string line;
-
                 backupPaths = new Collection<String>();
 
                 while ((line = backupFiles.ReadLine()) != null)
@@ -32,11 +31,11 @@ namespace ServerBackupUtility.Services
                     backupPaths.Add(line);
                 }
 
-                backupPaths.Add(_archivePath);
+                backupPaths.Add(_archivePath + "\\*");
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFilesAsync #1 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles #1 - " + ex.Message);
             }
             finally
             {
@@ -53,12 +52,11 @@ namespace ServerBackupUtility.Services
                         string filePattern = backupPath.Trim().Substring(index1 + 1);
                         string folderPath = backupPath.Trim().Substring(0, index1);
 
-                        IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
+                        IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.TopDirectoryOnly);
 
                         foreach (var filePath in filePaths)
                         {
-                            int index2 = filePath.Trim().LastIndexOf('\\');
-                            string fileName = filePath.Trim().Substring(index2 + 1);
+                            string fileName = Path.GetFileName(filePath);
 
                             LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
                             ftpService.UploadFile(filePath);
@@ -68,7 +66,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFilesAsync #2 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles #2 - " + ex.Message);
             }
 
             LogService.LogEvent("Finishing Backup Files Process");

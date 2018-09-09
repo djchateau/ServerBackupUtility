@@ -10,7 +10,7 @@ namespace ServerBackupUtility.Services
 {
     public class DatabaseService : IDatabaseService
     {
-        private readonly string _databasePath = ConfigurationManager.AppSettings["DatabasePath"];
+        private readonly string _databasePath = ConfigurationManager.AppSettings["DatabasePath"].Trim();
 
         public void BackupDatabases(IFtpService ftpService)
         {
@@ -33,7 +33,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: DatabaseService.BackupDatabasesAsync - " + ex.Message);
+                LogService.LogEvent("Error: DatabaseService.BackupDatabases - " + ex.Message);
             }
 
             LogService.LogEvent("Finishing Database Backup Process");
