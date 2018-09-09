@@ -1,10 +1,11 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class DatabaseService : IDatabaseService
     {
@@ -23,6 +24,7 @@ namespace ServerBackupUtility
 
                     await LogService.LogEventAsync("Uploading DataBase To FTP Server: " + dbName);
                     await ftpService.UploadFileAsync(dbFilePath);
+                    File.Delete(dbFilePath);
                 }
             }
             catch (Exception ex)

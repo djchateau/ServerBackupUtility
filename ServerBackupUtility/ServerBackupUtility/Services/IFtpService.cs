@@ -1,11 +1,12 @@
 
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public interface IFtpService
     {
-        Task InitializeFtpAsync();
+        Task InitializeFtpAsync(bool status = false);
         Task UploadFileAsync(string filePath);
+        Task DeleteCurrentFtpFolderAsync();
     }
 }

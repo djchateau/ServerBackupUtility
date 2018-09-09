@@ -1,4 +1,5 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Net.Cache;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class FtpService : IFtpService
     {
@@ -20,7 +21,7 @@ namespace ServerBackupUtility
         private readonly string _userName = ConfigurationManager.AppSettings["FtpUserName"];
         private readonly string _password = ConfigurationManager.AppSettings["FtpPassword"];
 
-        public async Task InitializeFtpAsync()
+        public async Task InitializeFtpAsync(bool status = false)
         {
             await LogService.LogEventAsync("Contacting FTP Server For Login");
 
@@ -37,7 +38,7 @@ namespace ServerBackupUtility
             try
             {
                 Uri requestUri = new Uri(baseUri, _dateTime);
-                FtpWebRequest request = (FtpWebRequest) WebRequest.Create(requestUri);
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(requestUri);
 
                 request.Credentials = networkCredential;
                 if (_ssl)
@@ -50,13 +51,19 @@ namespace ServerBackupUtility
                 request.ContentLength = 0;
                 request.Method = WebRequestMethods.Ftp.MakeDirectory;
 
-                response = (FtpWebResponse) await request.GetResponseAsync();
+                response = (FtpWebResponse)await request.GetResponseAsync();
                 await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
             }
             catch (WebException ex)
             {
-                response = (FtpWebResponse) ex.Response;
+                response = (FtpWebResponse)ex.Response;
                 await LogService.LogEventAsync("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
+
+                if (!status)
+                {
+                    await DeleteCurrentFtpFolderAsync();
+                    await InitializeFtpAsync(true);
+                }
             }
             finally
             {
@@ -84,7 +91,7 @@ namespace ServerBackupUtility
             try
             {
                 Uri fileNameUri = new Uri(baseUri, _dateTime + "/" + Path.GetFileName(filePath));
-                FtpWebRequest request = (FtpWebRequest) WebRequest.Create(fileNameUri);
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(fileNameUri);
 
                 request.Credentials = networkCredential;
                 if (_ssl)
@@ -109,12 +116,12 @@ namespace ServerBackupUtility
                 }
                 while (readBytes != 0);
 
-                response = (FtpWebResponse) await request.GetResponseAsync();
+                response = (FtpWebResponse)await request.GetResponseAsync();
                 await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
             }
             catch (WebException ex)
             {
-                response = (FtpWebResponse) ex.Response;
+                response = (FtpWebResponse)ex.Response;
                 await LogService.LogEventAsync("Error: FtpService.UploadFileAsync - " + response.StatusDescription);
             }
             finally
@@ -129,6 +136,53 @@ namespace ServerBackupUtility
                     requestStream.Close();
                 }
 
+                if (response != null)
+                {
+                    response.Close();
+                }
+            }
+        }
+
+        public async Task DeleteCurrentFtpFolderAsync()
+        {
+            await LogService.LogEventAsync("Deleting Current FTP Folder");
+
+            Uri baseUri = _port == "21" ? new Uri("ftp://" + _url) : new Uri("ftp://" + _url + ':' + _port);
+
+            NetworkCredential networkCredential = new NetworkCredential();
+            networkCredential.UserName = _userName;
+            networkCredential.Password = _password;
+
+            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
+
+            FtpWebResponse response = null;
+
+            try
+            {
+                Uri requestUri = new Uri(baseUri, _dateTime);
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(requestUri);
+
+                request.Credentials = networkCredential;
+                if (_ssl)
+                { request.ClientCertificates.Add(certificate2); }
+                request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
+                request.EnableSsl = _ssl;
+                request.KeepAlive = true;
+                request.UsePassive = String.Equals(_mode, "passive", StringComparison.OrdinalIgnoreCase);
+                request.UseBinary = true;
+                request.ContentLength = 0;
+                request.Method = WebRequestMethods.Ftp.RemoveDirectory;
+
+                response = (FtpWebResponse)await request.GetResponseAsync();
+                await LogService.LogEventAsync("FTP Server Response: " + response.StatusDescription);
+            }
+            catch (WebException ex)
+            {
+                response = (FtpWebResponse)ex.Response;
+                await LogService.LogEventAsync("Error: FtpService.InitializeFtpAsync - " + response.StatusDescription);
+            }
+            finally
+            {
                 if (response != null)
                 {
                     response.Close();

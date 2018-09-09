@@ -11,9 +11,9 @@ namespace ServerBackupUtility
         {
             ServiceBase[] ServicesToRun;
 
-            ServicesToRun = new ServiceBase[] 
-			                { 
-				                new Startup() 
+            ServicesToRun = new ServiceBase[]
+			                {
+				                new Startup()
 			                };
 
             if (Environment.UserInteractive && System.Diagnostics.Debugger.IsAttached)
@@ -41,7 +41,7 @@ namespace ServerBackupUtility
             foreach (ServiceBase service in servicesToRun)
             {
                 Console.Write(service.ServiceName);
-                onStartMethod.Invoke(service, new object[] { new string[] { } });
+                onStartMethod.Invoke(service, new object[] { new string[] { "debug" } });
                 Console.WriteLine(" Started");
             }
 
@@ -63,7 +63,7 @@ namespace ServerBackupUtility
             }
 
             Console.WriteLine();
-            Console.WriteLine("Service is Completely Stopped");
+            Console.WriteLine("Server Backup Utility Has Completed");
 
             // Waiting a key press to not return to VS directly
             if (System.Diagnostics.Debugger.IsAttached)

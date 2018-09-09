@@ -1,4 +1,5 @@
 ﻿
+using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
 using System.Net;
@@ -8,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public class EmailService : IEmailService
     {

@@ -1,4 +1,6 @@
 ﻿
+using ServerBackupUtility.Logging;
+using ServerBackupUtility.Services;
 using System;
 using System.Configuration;
 using System.ServiceProcess;
@@ -8,17 +10,30 @@ namespace ServerBackupUtility
 {
     public partial class Startup : ServiceBase
     {
+        private Timer _scheduler = null;
+        private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
+        private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
+        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
+        private int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
+        private readonly IRestartService _restartService = new RestartService();
+
         public Startup()
         {
             InitializeComponent();
         }
 
-        private Timer _scheduler = null;
-        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Time"]);
 
         protected override void OnStart(string[] args)
         {
             WriteToLog("Scheduler Service Started");
+            _restartService.WatchAppConfig();
+
+            if (args[0] == "debug")
+            {
+                _mode = "interval";
+                _minutes = 1;
+            }
+
             SchedulerService();
         }
 
@@ -34,10 +49,31 @@ namespace ServerBackupUtility
             {
                 _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
-                if (DateTime.Now.ToLocalTime() > _time)
+                switch (_mode)
                 {
-                    // If scheduled time is passed, set schedule for the next day.
-                    _time = _time.AddDays(1);
+                    case "clock":
+                        if (_time > DateTime.Parse("23:45") && _time < DateTime.Parse("00:00"))
+                        {
+                            _time = DateTime.Parse("00:00");
+                        }
+
+                        if (DateTime.Now.ToLocalTime() > _time)
+                        {
+                            // If scheduled time is passed, set schedule for the next day.
+                            _time = _time.AddDays(1);
+                        }
+
+                        break;
+
+                    case "interval":
+                        _time = DateTime.Now.ToLocalTime().AddMinutes(_minutes);
+
+                        if (DateTime.Now.ToLocalTime() > _time)
+                        {
+                            _time = _time.AddMinutes(_minutes);
+                        }
+
+                        break;
                 }
 
                 TimeSpan timeSpan = _time.Subtract(DateTime.Now.ToLocalTime());
@@ -56,7 +92,7 @@ namespace ServerBackupUtility
                 WriteToLog(String.Format("Scheduler Service Error: {0}", ex.Message));
 
                 // Stop the Windows service.
-                using (var serviceController = new ServiceController("BackupScheduler"))
+                using (ServiceController serviceController = new ServiceController("BackupScheduler"))
                 {
                     serviceController.Stop();
                 }

@@ -1,4 +1,6 @@
 ﻿
+using ServerBackupUtility.Logging;
+using ServerBackupUtility.Services;
 using System.Net;
 
 namespace ServerBackupUtility
@@ -24,7 +26,7 @@ namespace ServerBackupUtility
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            LogService.CreateLogAsync("Scheduled Global Server Backup").ConfigureAwait(false);
+            LogService.LogEventAsync().ConfigureAwait(false);
             _archiveService.CreateArchivesAsync().ConfigureAwait(false);
             LogService.LogEventAsync().ConfigureAwait(false);
             _ftpService.InitializeFtpAsync().ConfigureAwait(false);

@@ -1,7 +1,7 @@
 
 using System.Threading.Tasks;
 
-namespace ServerBackupUtility
+namespace ServerBackupUtility.Services
 {
     public interface IEmailService
     {
