@@ -11,20 +11,20 @@ namespace ServerBackupUtility.Services
 {
     public class ArchiveService : IArchiveService
     {
-        private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"];
-        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"];
+        private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"].Trim();
+        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
 
         public void CreateArchives()
         {
             LogService.LogEvent("Reading Web Folder Paths");
 
-            string[] folderPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] compressionPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
 
             try
             {
-                foreach (var folderPath in folderPaths)
+                foreach (var compressionPath in compressionPaths)
                 {
-                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(folderPath, "*", SearchOption.TopDirectoryOnly);
+                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(compressionPath, "*", SearchOption.TopDirectoryOnly);
 
                     foreach (var directoryPath in directoryPaths)
                     {
@@ -45,7 +45,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: ArchiveService.CreateArchivesAsync - " + ex.Message);
+                LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }
 
             LogService.LogEvent("Finishing Archive Backup Process");

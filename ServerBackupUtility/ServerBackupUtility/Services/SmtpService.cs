@@ -11,7 +11,7 @@ namespace ServerBackupUtility.Services
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _dateTime = DateTime.Now.ToString("yy-MM-dd");
-        private readonly bool _smtpService = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpService"]);
+        private readonly bool _smtpService = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpService"].Trim());
 
         public void CreateSmtpMessge()
         {
@@ -31,7 +31,7 @@ namespace ServerBackupUtility.Services
                 }
                 catch (Exception ex)
                 {
-                    LogService.LogEvent("Error: SmtpService.CreateSmtpMessgeAsync - " + ex.Message);
+                    LogService.LogEvent("Error: SmtpService.CreateSmtpMessge - " + ex.Message);
                 }
                 finally
                 {
