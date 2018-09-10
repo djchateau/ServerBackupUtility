@@ -15,7 +15,7 @@ namespace ServerBackupUtility.Services
             FileSystemWatcher fileWatcher = new FileSystemWatcher();
 
             fileWatcher.Path = _path;
-            fileWatcher.Filter = "App.config";
+            fileWatcher.Filter = "*.config";
             fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
             fileWatcher.EnableRaisingEvents = true;
             fileWatcher.IncludeSubdirectories = false;

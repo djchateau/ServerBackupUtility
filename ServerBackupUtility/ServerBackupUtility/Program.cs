@@ -5,16 +5,16 @@ using System.ServiceProcess;
 
 namespace ServerBackupUtility
 {
-    static class Program
+    internal static class Program
     {
-        static void Main()
+        private static void Main()
         {
             ServiceBase[] ServicesToRun;
 
             ServicesToRun = new ServiceBase[]
-			                {
-				                new Startup()
-			                };
+                            {
+                                new Startup()
+                            };
 
             if (Environment.UserInteractive && System.Diagnostics.Debugger.IsAttached)
             {
@@ -28,7 +28,7 @@ namespace ServerBackupUtility
             }
         }
 
-        static void RunInteractiveServices(ServiceBase[] servicesToRun)
+        private static void RunInteractiveServices(ServiceBase[] servicesToRun)
         {
             Console.WriteLine();
             Console.WriteLine("Starting the Service in Interactive Mode");
@@ -65,13 +65,9 @@ namespace ServerBackupUtility
             Console.WriteLine();
             Console.WriteLine("Server Backup Utility Has Completed");
 
-            // Waiting a key press to not return to VS directly
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                Console.WriteLine();
-                Console.Write("Press any Key to Exit");
-                Console.ReadKey();
-            }
+            Console.WriteLine();
+            Console.Write("Any Key to Exit");
+            Console.ReadKey();
         }
     }
 }
