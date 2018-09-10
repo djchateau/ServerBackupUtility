@@ -8,11 +8,12 @@ using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
-    public class DatabaseService : IDatabaseService
+    public class DatabaseUploadService : IDatabaseUploadService
     {
         private readonly string _databasePath = ConfigurationManager.AppSettings["DatabasePath"].Trim();
+        private readonly bool _deleteFiles = Convert.ToBoolean(ConfigurationManager.AppSettings["DeleteFiles"].Trim());
 
-        public void BackupDatabases(IFtpService ftpService)
+        public void BackupDatabases(ITransferService transferService)
         {
             LogService.LogEvent("Reading Database File Paths");
 
@@ -26,9 +27,10 @@ namespace ServerBackupUtility.Services
                     string dbName = dbFilePath.Trim().Substring(index + 1);
 
                     LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
-                    ftpService.UploadFile(dbFilePath);
+
+                    transferService.UploadFile(dbFilePath);
                     Thread.Sleep(1000);
-                    File.Delete(dbFilePath);
+                    if (_deleteFiles) { File.Delete(dbFilePath); }
                 }
             }
             catch (Exception ex)

@@ -142,25 +142,25 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\IRestartService.cs" />
-    <Compile Include="Services\RestartService.cs" />
-    <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\CompressionService.cs" />
+    <Compile Include="Services\DatabaseUploadService.cs" />
+    <Compile Include="Services\DirectUploadService.cs" />
     <Compile Include="Services\EmailService.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Services\IArchiveService.cs" />
-    <Compile Include="Services\IDatabaseService.cs" />
-    <Compile Include="Services\IEmailService.cs" />
-    <Compile Include="Services\ISmtpService.cs" />
-    <Compile Include="Services\IUploadService.cs" />
-    <Compile Include="Services\IFtpService.cs" />
-    <Compile Include="Logging\LogService.cs" />
-    <Compile Include="BackupController.cs" />
+    <Compile Include="Services\RestartService.cs" />
     <Compile Include="Services\SmtpService.cs" />
-    <Compile Include="Services\UploadService.cs" />
-    <Compile Include="Services\FtpService.cs" />
+    <Compile Include="Services\IRestartService.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Services\ICompressionService.cs" />
+    <Compile Include="Services\IDatabaseUploadService.cs" />
+    <Compile Include="Services\ISmtpService.cs" />
+    <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Services\IDirectUploadService.cs" />
+    <Compile Include="Services\ITransferService.cs" />
+    <Compile Include="Logging\LogService.cs" />
+    <Compile Include="ServicesController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ArchiveService.cs" />
+    <Compile Include="Services\TransferService.cs" />
     <Compile Include="Startup.cs">
       <SubType>Component</SubType>
     </Compile>

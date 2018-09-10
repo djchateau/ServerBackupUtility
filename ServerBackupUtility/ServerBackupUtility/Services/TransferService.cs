@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace ServerBackupUtility.Services
 {
-    public class FtpService : IFtpService
+    public class TransferService : ITransferService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");

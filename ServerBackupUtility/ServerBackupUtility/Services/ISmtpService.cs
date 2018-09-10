@@ -1,8 +1,8 @@
-﻿
+
 namespace ServerBackupUtility.Services
 {
     public interface ISmtpService
     {
-        void CreateSmtpMessge();
+        void SendMail(string messageBody);
     }
 }

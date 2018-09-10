@@ -6,15 +6,17 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
-    public class UploadService : IUploadService
+    public class DirectUploadService : IDirectUploadService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
+        private readonly bool _deleteFiles = Convert.ToBoolean(ConfigurationManager.AppSettings["DeleteFiles"].Trim());
 
-        public void UploadBackupFiles(IFtpService ftpService)
+        public void UploadBackupFiles(ITransferService transferService)
         {
             StreamReader backupFiles = new StreamReader(_path + "\\ServerBackupFiles.txt", Encoding.UTF8);
             ICollection<String> backupPaths = null;
@@ -57,9 +59,11 @@ namespace ServerBackupUtility.Services
                         foreach (var filePath in filePaths)
                         {
                             string fileName = Path.GetFileName(filePath);
-
                             LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
-                            ftpService.UploadFile(filePath);
+
+                            transferService.UploadFile(filePath);
+                            Thread.Sleep(1000);
+                            if (_deleteFiles) { File.Delete(filePath); }
                         }
                     }
                 }

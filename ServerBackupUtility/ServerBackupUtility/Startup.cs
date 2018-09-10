@@ -101,7 +101,7 @@ namespace ServerBackupUtility
         private void SchedulerCallback(object e)
         {
             WriteToLog("Begin Backup Session");
-            BackupController backupController = new BackupController();
+            ServicesController backupController = new ServicesController();
             backupController.RunBackup();
         }
 

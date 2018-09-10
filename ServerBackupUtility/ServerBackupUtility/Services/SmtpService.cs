@@ -2,7 +2,10 @@
 using ServerBackupUtility.Logging;
 using System;
 using System.Configuration;
-using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ServerBackupUtility.Services
@@ -10,33 +13,63 @@ namespace ServerBackupUtility.Services
     public class SmtpService : ISmtpService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");
-        private readonly bool _smtpService = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpService"]);
+        private readonly string _userName = ConfigurationManager.AppSettings["SmtpUserName"];
+        private readonly string _password = ConfigurationManager.AppSettings["SmtpPassword"];
+        private readonly string _smtpHost = ConfigurationManager.AppSettings["SmtpHost"];
+        private readonly int _smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
+        private readonly bool _smtpSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"]);
+        private readonly string _sender = ConfigurationManager.AppSettings["SmtpSender"];
+        private readonly string _recipient = ConfigurationManager.AppSettings["SmtpRecipient"];
 
-        public void CreateSmtpMessge()
+        private readonly string _subject = "Daily Backup Report - " + DateTime.Now.ToLongDateString();
+
+        public void SendMail(string messageBody)
         {
-            if (_smtpService)
+            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
+
+            MailMessage mailMessage = null;
+            SmtpClient smtpClient = null;
+
+            try {
+                mailMessage = new MailMessage(_sender, _recipient);
+                mailMessage.Body = messageBody;
+                mailMessage.BodyEncoding = Encoding.UTF8;
+                mailMessage.BodyTransferEncoding = TransferEncoding.EightBit;
+                mailMessage.IsBodyHtml = false;
+                mailMessage.Subject = _subject;
+                mailMessage.SubjectEncoding = Encoding.UTF8;
+                mailMessage.Priority = MailPriority.Normal;
+
+                NetworkCredential credentials = new NetworkCredential();
+                credentials.UserName = _userName;
+                credentials.Password = _password;
+
+                smtpClient = new SmtpClient();
+                smtpClient.Host = _smtpHost;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = credentials;
+                smtpClient.ClientCertificates.Add(certificate2);
+                smtpClient.Port = _smtpPort;
+                smtpClient.EnableSsl = _smtpSsl;
+                smtpClient.DeliveryFormat = SmtpDeliveryFormat.International;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception ex)
             {
-                LogService.LogEvent("Sending Email");
-
-                FileStream fileStream = new FileStream(_path + "\\LogFiles\\" + _dateTime + ".txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8);
-
-                try
+                LogService.LogSmtpError("Error: EmailService.SendEmail - " + ex.Message);
+            }
+            finally
+            {
+                if (mailMessage != null)
                 {
-                    string logFile = streamReader.ReadToEnd();
-
-                    IEmailService emailService = new EmailService();
-                    emailService.SendEmail("\r\n" + logFile + "\r\n");
+                    mailMessage.Dispose();
                 }
-                catch (Exception ex)
+
+                if (smtpClient != null)
                 {
-                    LogService.LogEvent("Error: SmtpService.CreateSmtpMessge - " + ex.Message);
-                }
-                finally
-                {
-                    streamReader.Close();
-                    fileStream.Close();
+                    smtpClient.Dispose();
                 }
             }
         }
