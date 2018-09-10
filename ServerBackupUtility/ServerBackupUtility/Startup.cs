@@ -11,11 +11,11 @@ namespace ServerBackupUtility
     public partial class Startup : ServiceBase
     {
         private Timer _scheduler = null;
+        private IRestartService _restartService = null;
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
         private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
         private int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
-        private readonly IRestartService _restartService = new RestartService();
 
         public Startup()
         {
@@ -25,9 +25,11 @@ namespace ServerBackupUtility
         protected override void OnStart(string[] args)
         {
             WriteToLog("Scheduler Service Started");
+
+            _restartService = new RestartService();
             _restartService.WatchAppConfig();
 
-            if (args[0] == "debug")
+            if (args.Length > 0 && args[0] == "debug")
             {
                 _mode = "interval";
                 _minutes = 1;
@@ -101,8 +103,8 @@ namespace ServerBackupUtility
         private void SchedulerCallback(object e)
         {
             WriteToLog("Begin Backup Session");
-            ServicesController backupController = new ServicesController();
-            backupController.RunBackup();
+            ServicesController servicesController = new ServicesController();
+            servicesController.RunBackup();
         }
 
         private void WriteToLog(string message)

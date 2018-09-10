@@ -1,7 +1,7 @@
 @ECHO OFF
 CLS
 ECHO.
-ECHO This file installs the Server Backup Utility as a Windows application.
+ECHO This file installs the Server Backup Utility as a Windows Service.
 ECHO Run this file from an Administrator command window.
 ECHO.
 ECHO Open this file from the Installer folder in the temporary directory
@@ -13,29 +13,21 @@ ECHO.
 PAUSE
 ECHO.
 ECHO Creating a Backup Utility folder in the system root.
-ECHO.
-IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\ (MKDIR %SYSTEMDRIVE%\BackupUtility)
-IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\LogFiles (MKDIR %SYSTEMDRIVE%\BackupUtility\LogFiles)
-ECHO.
+IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\ (MKDIR %SYSTEMDRIVE%\BackupUtility) > install.log
+IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\LogFiles (MKDIR %SYSTEMDRIVE%\BackupUtility\LogFiles) > install.log
 ECHO Copying installation files to the Backup Utility folder.
+COPY ..\Release\ServerBackupFiles.txt %SYSTEMDRIVE%\BackupUtility > install.log
+COPY ..\Release\ServerBackupUtility.exe %SYSTEMDRIVE%\BackupUtility > install.log
+COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility > install.log
+COPY ..\Release\localhost.pfx %SYSTEMDRIVE%\BackupUtility > install.log
+ECHO Adding the LocalService account to the Backup Utility folder's modify permissions.
+ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant:r LocalService:(OI)M > install.log
+ECHO Please wait while the Backup Scheduler service is installed.
+SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log
+PING -n 5 127.0.0.1 > nul
 ECHO.
-COPY ..\Release\ServerBackupFiles.txt %SYSTEMDRIVE%\BackupUtility
-COPY ..\Release\ServerBackupUtility.exe %SYSTEMDRIVE%\BackupUtility
-COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility
-COPY ..\Release\localhost.pfx %SYSTEMDRIVE%\BackupUtility
-ECHO.
-ECHO Adding the NetworkService account to the Backup Utility folder's modify permissions.
-ECHO.
-ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant NetworkService:(OI)M
-ECHO.
-ECHO.
-ECHO Installing the Windows Scheduler Service.
-ECHO.
-SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\NETWORK SERVICE" password= "" DisplayName= "Server Backup Utility"
-ECHO.
-TIMEOUT /T 10 /NOBREAK
-ECHO.
-SC start BackupScheduler
+ECHO Starting the Backup Scheduler Service.
+SC start BackupScheduler > install.log
 ECHO.
 ECHO The Server Backup Utility installation is complete.
 ECHO.

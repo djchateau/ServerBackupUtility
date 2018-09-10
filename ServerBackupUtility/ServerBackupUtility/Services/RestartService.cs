@@ -9,23 +9,22 @@ namespace ServerBackupUtility.Services
     public class RestartService : IRestartService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private void FileSystemEventHandler(object sender, FileSystemEventArgs e) => RestartWindowsService("BackupScheduler");
 
         public void WatchAppConfig()
         {
-            FileSystemWatcher watcher = new FileSystemWatcher();
+            FileSystemWatcher fileWatcher = new FileSystemWatcher();
 
-            watcher.Path = _path;
-            watcher.Filter = "App.Config";
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.EnableRaisingEvents = true;
-            watcher.IncludeSubdirectories = false;
-            watcher.Changed += FileSystemEventHandler;
+            fileWatcher.Path = _path;
+            fileWatcher.Filter = "App.config";
+            fileWatcher.NotifyFilter = NotifyFilters.LastWrite;
+            fileWatcher.EnableRaisingEvents = true;
+            fileWatcher.IncludeSubdirectories = false;
+            fileWatcher.Changed += FileWatcher_Changed;
         }
 
-        private void RestartWindowsService(string serviceName)
+        private void FileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            ServiceController serviceController = new ServiceController(serviceName);
+            ServiceController serviceController = new ServiceController("BackupScheduler");
 
             try
             {
