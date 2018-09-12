@@ -28,14 +28,21 @@ namespace ServerBackupUtility
 
             LogService.LogEvent();
             _compressionService.CreateArchives();
+
             LogService.LogEvent();
-            _transferService.InitializeFtp();
-            LogService.LogEvent();
-            _directUploadService.UploadBackupFiles(_transferService);
-            LogService.LogEvent();
-            _databaseUploadService.BackupDatabases(_transferService);
+
+            if (_transferService.InitializeFtp())
+            {
+                LogService.LogEvent();
+                _directUploadService.UploadBackupFiles(_transferService);
+
+                LogService.LogEvent();
+                _databaseUploadService.BackupDatabases(_transferService);
+            }
+
             LogService.LogEvent("End Scheduled Global Server Backup");
             LogService.LogEvent();
+
             _emailService.CreateMessge();
         }
     }

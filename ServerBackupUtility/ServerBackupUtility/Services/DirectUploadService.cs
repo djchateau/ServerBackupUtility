@@ -54,16 +54,18 @@ namespace ServerBackupUtility.Services
                         string filePattern = backupPath.Trim().Substring(index1 + 1);
                         string folderPath = backupPath.Trim().Substring(0, index1);
 
-                        IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.TopDirectoryOnly);
+                        IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
 
                         foreach (var filePath in filePaths)
                         {
                             string fileName = Path.GetFileName(filePath);
                             LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
 
-                            transferService.UploadFile(filePath);
-                            Thread.Sleep(1000);
-                            if (_deleteFiles) { File.Delete(filePath); }
+                            if (transferService.UploadFile(filePath))
+                            {
+                                Thread.Sleep(1000);
+                                if (_deleteFiles) { File.Delete(filePath); }
+                            }
                         }
                     }
                 }

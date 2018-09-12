@@ -28,9 +28,11 @@ namespace ServerBackupUtility.Services
 
                     LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
 
-                    transferService.UploadFile(dbFilePath);
-                    Thread.Sleep(1000);
-                    if (_deleteFiles) { File.Delete(dbFilePath); }
+                    if (transferService.UploadFile(dbFilePath))
+                    {
+                        Thread.Sleep(1000);
+                        if (_deleteFiles) { File.Delete(dbFilePath); }
+                    }
                 }
             }
             catch (Exception ex)
