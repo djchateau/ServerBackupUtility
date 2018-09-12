@@ -22,7 +22,6 @@ namespace ServerBackupUtility.Services
 
         public bool InitializeFtp()
         {
-            bool status = false;
             LogService.LogEvent("Contacting FTP Server For Login");
 
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
@@ -57,11 +56,14 @@ namespace ServerBackupUtility.Services
                 {
                     return true;
                 }
+
+                return false;
             }
             catch (WebException ex)
             {
                 response = (FtpWebResponse)ex.Response;
                 LogService.LogEvent("Error: FtpService.InitializeFtp - " + response.StatusDescription);
+
                 return false;
             }
             finally
@@ -75,7 +77,6 @@ namespace ServerBackupUtility.Services
 
         public bool UploadFile(string filePath)
         {
-            bool status = false;
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
 
             NetworkCredential networkCredential = new NetworkCredential();
@@ -123,11 +124,14 @@ namespace ServerBackupUtility.Services
                 {
                     return true;
                 }
+
+                return false;
             }
             catch (WebException ex)
             {
                 response = (FtpWebResponse) ex.Response;
                 LogService.LogEvent("Error: FtpService.UploadFile - " + response.StatusDescription);
+
                 return false;
             }
             finally
