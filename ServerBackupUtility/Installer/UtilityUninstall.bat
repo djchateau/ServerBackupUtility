@@ -20,8 +20,7 @@ DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe > uninstall.log
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe.config > uninstall.log
 DEL %SYSTEMDRIVE%\BackupUtility\localhost.pfx > uninstall.log
 ECHO.
-ECHO.
-CHOICE /M "Do you want to remove the Log files?"
+CHOICE /M "Do you want to remove the Server Backup Utility Log files?"
 IF ERRORLEVEL 2 GOTO END
 RMDIR /S %SYSTEMDRIVE%\BackupUtility\LogFiles > uninstall.log
 :END

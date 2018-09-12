@@ -15,22 +15,23 @@ ECHO.
 ECHO Creating a Backup Utility folder in the system root.
 IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\ (MKDIR %SYSTEMDRIVE%\BackupUtility) > install.log
 IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\LogFiles (MKDIR %SYSTEMDRIVE%\BackupUtility\LogFiles) > install.log
+ECHO.
 ECHO Copying installation files to the Backup Utility folder.
 COPY ..\Release\ServerBackupFiles.txt %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\localhost.pfx %SYSTEMDRIVE%\BackupUtility > install.log
-ECHO Adding the LocalService account to the Backup Utility folder's modify permissions.
-ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant:r LocalService:(OI)M > install.log
+REM ECHO Adding the LocalService account to the Backup Utility folder's modify permissions.
+REM ECHO.
+REM ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant:r LocalService:(OI)M > install.log
 ECHO.
 ECHO Please wait while the Backup Scheduler service is installed.
-SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log
+SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto > install.log
 PING -n 5 127.0.0.1 > nul
 ECHO.
 ECHO Starting the Backup Scheduler Service.
 SC start BackupScheduler > install.log
 ECHO.
 ECHO The Server Backup Utility installation is complete.
-ECHO.
 PAUSE
 @ECHO ON

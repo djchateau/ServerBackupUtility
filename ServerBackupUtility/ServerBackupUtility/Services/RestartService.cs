@@ -3,6 +3,7 @@ using ServerBackupUtility.Logging;
 using System;
 using System.IO;
 using System.ServiceProcess;
+using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
@@ -28,14 +29,11 @@ namespace ServerBackupUtility.Services
 
             try
             {
-                if (serviceController.Status.Equals(ServiceControllerStatus.Running) || serviceController.Status.Equals(ServiceControllerStatus.StartPending))
-                {
-                    serviceController.Stop();
-                }
+                serviceController.Stop();
+                Thread.Sleep(5000);
 
-                serviceController.WaitForStatus(ServiceControllerStatus.Stopped);
                 serviceController.Start();
-                serviceController.WaitForStatus(ServiceControllerStatus.Running);
+                Thread.Sleep(5000);
             }
             catch (Exception ex)
             {
