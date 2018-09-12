@@ -22,6 +22,7 @@ COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility > ins
 COPY ..\Release\localhost.pfx %SYSTEMDRIVE%\BackupUtility > install.log
 ECHO Adding the LocalService account to the Backup Utility folder's modify permissions.
 ICACLS %SYSTEMDRIVE%\BackupUtility\ /grant:r LocalService:(OI)M > install.log
+ECHO.
 ECHO Please wait while the Backup Scheduler service is installed.
 SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log
 PING -n 5 127.0.0.1 > nul
