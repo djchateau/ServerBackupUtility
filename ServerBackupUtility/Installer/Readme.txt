@@ -15,7 +15,7 @@ https://go.microsoft.com/fwlink/?LinkId=863261
 
 Server Backup Utility Installation Instructions
 -----------------------------------------------
-If all else fails, read the instructions...
+If all else fails, read the directions...
 
 1) Unzip the ServerBackupUtility.zip file into a temporary folder.
 2) Add the relevent entries to the ServerBackupFiles.txt file in the Release folder (see below).
@@ -29,7 +29,7 @@ If all else fails, read the instructions...
 To upgrade an existing version of the utility, run the UtilityUninstall.bat file,
 then run the UtilityInstall.bat file. Always run these files in Administrator mode.
 
-Questions or Problems: You can reach me at fwchateau@gmail.com
+Questions or Problems: You can reach me at fwchateau@gmail.com (Place Server Backup Utility in the subject line.)
 
 
 ServerBackupFiles.txt
