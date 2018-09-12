@@ -134,14 +134,16 @@ to enable the service to do its work. To do this you must add the Local Service 
 service and to any folders and files the service touches, or you will get access errors.
 
 You can install the Backup Scheduler service using the Local Service or Network Service accounts by adding the following text to the
-UtilityInstall batch file. Do not include a password. Leave the password empty.
+UtilityInstall batch file. Leave the password field empty.
 
-Current Text: \
-SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto > install.log
+Local System: SC create BackupScheduler \
+binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto > install.log
 
-Change To: \
-SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log \
-SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\NETWORK SERVICE" password= "" > install.log
+Local Service: SC create BackupScheduler \
+binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log
+
+Network Service: SC create BackupScheduler \
+binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\NETWORK SERVICE" password= "" > install.log
 
 If you have trouble installing the utility or getting it to work as a Local or Network Service, write me and I'll walk you through it.
 
@@ -166,3 +168,4 @@ has been implemented in the application. For the time being, use your database m
 place them in a backup folder for the utility to upload.
 
 Licensed under GNU GENERAL PUBLIC LICENSE - Version 3, 29 June 2007
+
