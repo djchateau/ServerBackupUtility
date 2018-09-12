@@ -131,8 +131,9 @@ Permissions
 Permissions can be a little confusing because of all the folders involved in backing up the files. The easiest way to get things up
 and running is to install the utility using the System account. All folders and files you will be accessing include System permissions
 by default, but since, in the unlikely event that you get hacked, I don't want to be responsible for that, so I install the utility as
-a Local Service, which has very little permissions assigned to it, but enough to enable the service to do its work. The consequences
-of this is you must add the Local Service account to any folders and files the service touches or you will get an access error.
+a Local Service with Modify permissions, which has light permissions assigned to it, but enough to enable the service to do its work.
+The consequences of this is you must add the Local Service account to any folders and files the service touches or you will get an
+access error.
 
 You can install the service using the System account by removing the text [obj= "NT AUTHORITY\LOCAL SERVICE" password= ""] from the
 UtilityInstall batch file and you're good to go. If you have trouble installing the utility using the System account or getting it
