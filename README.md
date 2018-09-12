@@ -21,10 +21,8 @@ If all else fails, read the directions...
 2) Add the relevent entries to the ServerBackupFiles.txt file in the Release folder (see below).
 3) Add the relevent entries to the ServerBackupUtility.exe.config file in the Release folder (see below).
 4) Switch to the Installation folder and right click on the UtilityInstall.bat file. Select Run as Administrator.
-5) The batch file will create a system drive \BackupUtility folder and install itself as a Windows Application.
-6) The batch file will set permissions for Network Servcie on the folder and sub-folder to run the utility package.
-7) Use Task Scheduler to schedule execution of the Server Backup Utility using the Network Service account.
-
+5) The batch file will create a system drive \BackupUtility folder and install itself as a Windows Service.
+6) The batch file will set permissions for Local System on the Backup Scheduler service that runs the utility.
 
 To upgrade an existing version of the utility, run the UtilityUninstall.bat file,
 then run the UtilityInstall.bat file. Always run these files in Administrator mode.
