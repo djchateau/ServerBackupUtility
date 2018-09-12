@@ -3,7 +3,6 @@ using ServerBackupUtility.Logging;
 using System;
 using System.IO;
 using System.ServiceProcess;
-using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
@@ -29,11 +28,17 @@ namespace ServerBackupUtility.Services
 
             try
             {
+                int ms1 = Environment.TickCount;
+                TimeSpan timeout = TimeSpan.FromMilliseconds(5000);
+
                 serviceController.Stop();
-                Thread.Sleep(5000);
+                serviceController.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
+
+                int ms2 = Environment.TickCount;
+                timeout = TimeSpan.FromMilliseconds(5000 - (ms2 - ms1));
 
                 serviceController.Start();
-                Thread.Sleep(5000);
+                serviceController.WaitForStatus(ServiceControllerStatus.Running, timeout);
             }
             catch (Exception ex)
             {
