@@ -29,7 +29,7 @@ If all else fails, read the directions...
 To upgrade an existing version of the utility, run the UtilityUninstall.bat file,
 then run the UtilityInstall.bat file. Always run these files in Administrator mode.
 
-Questions or Problems: You can reach me at fwchateau@gmail.com (Place Server Backup Utility in the subject line.)
+Questions or Problems: You can reach me at fwchateau@gmail.com (Add Server Backup Utility to the subject line)
 
 
 ServerBackupFiles.txt
@@ -129,15 +129,23 @@ Permissions
 ---------------------
 
 Permissions can be a little confusing because of all the folders involved in backing up the files. The easiest way to get things up
-and running is to install the utility using the System account. All folders and files you will be accessing include System permissions
-by default, but since, in the unlikely event that you get hacked, I don't want to be responsible for that, so I install the utility as
-a Local Service with Modify permissions, which has light permissions assigned to it, but enough to enable the service to do its work.
-The consequences of this is you must add the Local Service account to any folders and files the service touches or you will get an
-access error.
+and running is to install the utility using the Local System account. All folders and files you will be accessing include Local System
+permissions by default, but since, in the unlikely event you get hacked, I don't want to be responsible for it, so I'm adding this
+warning. You may want to change the permissions to Local Service or Network Service, which has lighter permissions assigned, but enough
+to enable the service to do its work. To do this you must add the Local Service or Network Service accounts to the Backup Scheduler
+service and to any folders and files the service touches, or you will get access errors.
 
-You can install the service using the System account by removing the text [obj= "NT AUTHORITY\LOCAL SERVICE" password= ""] from the
-UtilityInstall batch file and you're good to go. If you have trouble installing the utility using the System account or getting it
-to work as a Local Service, write me and I'll walk you through it.
+You can install the Backup Scheduler service using the Local Service or Network Service accounts by adding the following text to the
+UtilityInstall batch file. Do not include a password. Leave the password empty.
+
+Current Text: \
+SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto > install.log
+
+Change To: \
+SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\LOCAL SERVICE" password= "" > install.log
+SC create BackupScheduler binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\NETWORK SERVICE" password= "" > install.log
+
+If you have trouble installing the utility or getting it to work as a Local or Network Service, write me and I'll walk you through it.
 
 
 Miscellaneous Notes
