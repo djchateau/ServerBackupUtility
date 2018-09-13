@@ -30,7 +30,7 @@ then run the UtilityInstall.bat file. Always run these files in Administrator mo
 Questions or Problems: You can reach me at fwchateau@gmail.com (Add Server Backup Utility to the subject line)
 
 
-ServerBackupFiles.txt
+DirectBackupPaths.txt
 ---------------------
 
 Each line should contain a folder path ending with a file name, or a pattern match to a set of file names.
