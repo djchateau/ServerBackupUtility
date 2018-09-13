@@ -81,8 +81,8 @@ ServerBackupService.exe.config
   Use your database maintenance utility to archive your databases and place the backups in this folder) \
 	add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
 
-- You can delete the archived and database files from the Windows Server after they have been transferred \
-  to the FTP server. (Use this so old backup files don't accumulate on the Windows server)
+- You can delete the archived and database files from the Windows Server after they have been transferred
+  to the FTP server. (Use this so old backup files don't accumulate on the Windows server) \
     add key="DeleteFiles" value="true"
 
 - Url of the FTP server \
