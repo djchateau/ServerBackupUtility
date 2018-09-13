@@ -58,7 +58,7 @@ namespace ServerBackupUtility
                             _time = DateTime.Parse("00:00");
                         }
 
-                        if (DateTime.Now.ToLocalTime() > _time)
+                        if (TimeService.LocalTime > _time)
                         {
                             // If scheduled time is passed, set schedule for the next day.
                             _time = _time.AddDays(1);
@@ -67,9 +67,9 @@ namespace ServerBackupUtility
                         break;
 
                     case "interval":
-                        _time = DateTime.Now.ToLocalTime().AddMinutes(_minutes);
+                        _time = TimeService.LocalTime.AddMinutes(_minutes);
 
-                        if (DateTime.Now.ToLocalTime() > _time)
+                        if (TimeService.LocalTime > _time)
                         {
                             _time = _time.AddMinutes(_minutes);
                         }
@@ -77,7 +77,7 @@ namespace ServerBackupUtility
                         break;
                 }
 
-                TimeSpan timeSpan = _time.Subtract(DateTime.Now.ToLocalTime());
+                TimeSpan timeSpan = _time.Subtract(TimeService.LocalTime);
                 string schedule = String.Format("{0} days {1} hours {2} minutes {3} seconds", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 
                 WriteToLog(String.Format("Scheduler Service Scheduled to Run in: {0}", schedule));

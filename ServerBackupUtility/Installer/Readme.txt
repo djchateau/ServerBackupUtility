@@ -61,18 +61,7 @@ Pattern Match
 ServerBackupService.exe.config
 ------------------------------
 
-- List of folders separated by pipe characters, containing target sub-folders with multiple files,
-  each of which will be archived and backed up as a single zip file \
-	add key="FolderPaths" value="D:\Webs|D:\Media\Video"
-
-- Folder to store the above archived files for backup (All files in this folder will be backed up) \
-	add key="ArchivePath" value="D:\Backups"
-   
-- Folder to store the database archives (We do not recommend archiving database files with this utility.
-  Use your database maintenance utility to archive your databases and place the backups in this folder) \
-	add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
-
-- Scheduler Mode (Select Clock for backup at a regularly scheduled time or Interval for repetitive tasks) \
+- Scheduler Mode (Select Clock for daily backup on a regular schedule or Interval for repetitive tasks) \
     add key="Mode" value="clock"
 
 - Clock Time in 24 Hour Format \
@@ -80,6 +69,21 @@ ServerBackupService.exe.config
 
 - Interval Time in Minutes \
     add key="Interval" value="60"
+
+- List of folders separated by pipe characters, containing target sub-folders to be archived for backup \
+    (You cannot archive a root folder. Place your files in a sub-folder and add the root folder here)
+	add key="ArchivePaths" value="D:\Webs|D:\Media"
+
+- Folder to place archived files for backup (All files in this folder will be transfered to the FTP server) \
+	add key="BackupPath" value="D:\Backups"
+   
+- Folder to store the database archives (We do not recommend archiving database files with this utility.
+  Use your database maintenance utility to archive your databases and place the backups in this folder) \
+	add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
+
+- You can delete the archived and database files from the Windows Server after they have been transferred \
+  to the FTP server. (Use this so old backup files don't accumulate on the Windows server)
+    add key="DeleteFiles" value="true"
 
 - Url of the FTP server \
 	add key="FtpUrl" value="online-server.com"
@@ -99,8 +103,8 @@ ServerBackupService.exe.config
 - Select encrypted or unencrypted file transfer \
 	add key="FtpSsl" value="false"
 
-- Use the SMTP mail service to send log notifications \
-	add key="SmtpService" value="true"
+- Use the Email SMTP client to send log notifications \
+	add key="EmailService" value="true"
 
 - SMTP user account name \
 	add key="SmptUserName" value="services"
@@ -150,6 +154,9 @@ If you have trouble installing the utility or getting it to work as a Local or N
 
 Miscellaneous Notes
 ---------------------
+
+If you change a setting in the Config file while the utility is running, the Scheduler will automatically restart to pick up the new setting.
+You can also restart the Scheduler by running the RestartScheduler.bat file in Administrator mode.
 
 Because of the way we use dates as back-up folders on the FTP server, it is not a good idea to set the start time too close before
 Midnight. For example, if you have enough files so that the entire back-up takes 15 minutes to complete and you start the back-up at 23:50,

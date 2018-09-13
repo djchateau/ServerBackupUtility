@@ -8,14 +8,14 @@ using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
-    public class DatabaseUploadService : IDatabaseUploadService
+    public class DatabaseService : IDatabaseService
     {
         private readonly string _databasePath = ConfigurationManager.AppSettings["DatabasePath"].Trim();
         private readonly bool _deleteFiles = Convert.ToBoolean(ConfigurationManager.AppSettings["DeleteFiles"].Trim());
 
         public void BackupDatabases(ITransferService transferService)
         {
-            LogService.LogEvent("Reading Database File Paths");
+            LogService.LogEvent("Reading Database Files");
 
             IEnumerable<String> dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
 
@@ -40,7 +40,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: DatabaseService.BackupDatabases - " + ex.Message);
             }
 
-            LogService.LogEvent("Finishing Database Backup Process");
+            LogService.LogEvent("Completed Database Files Transfer");
         }
     }
 }

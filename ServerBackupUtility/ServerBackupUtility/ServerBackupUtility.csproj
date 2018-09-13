@@ -142,6 +142,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\TimeService.cs" />
     <Compile Include="Startup.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -149,18 +150,18 @@
       <DependentUpon>Startup.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\CompressionService.cs" />
-    <Compile Include="Services\DatabaseUploadService.cs" />
-    <Compile Include="Services\DirectUploadService.cs" />
+    <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\UploadService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\RestartService.cs" />
     <Compile Include="Services\SmtpService.cs" />
     <Compile Include="Services\IRestartService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Services\ICompressionService.cs" />
-    <Compile Include="Services\IDatabaseUploadService.cs" />
+    <Compile Include="Services\IDatabaseService.cs" />
     <Compile Include="Services\ISmtpService.cs" />
     <Compile Include="Services\IEmailService.cs" />
-    <Compile Include="Services\IDirectUploadService.cs" />
+    <Compile Include="Services\IUploadService.cs" />
     <Compile Include="Services\ITransferService.cs" />
     <Compile Include="Logging\LogService.cs" />
     <Compile Include="ServicesController.cs" />
@@ -189,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app-icon.ico" />
-    <Content Include="ServerBackupFiles.txt">
+    <Content Include="DirectBackupPaths.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -10,20 +10,20 @@ namespace ServerBackupUtility.Services
 {
     public class CompressionService : ICompressionService
     {
-        private readonly string _folderPaths = ConfigurationManager.AppSettings["FolderPaths"].Trim();
-        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
+        private readonly string _archivePaths = ConfigurationManager.AppSettings["ArchivePaths"].Trim();
+        private readonly string _backupPath = ConfigurationManager.AppSettings["BackupPath"].Trim();
 
         public void CreateArchives()
         {
-            LogService.LogEvent("Reading Web Folder Paths");
+            LogService.LogEvent("Reading Archive File Paths");
 
-            string[] folderPaths = _folderPaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] archivePaths = _archivePaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
 
             try
             {
-                foreach (var folderPath in folderPaths)
+                foreach (var archivePath in archivePaths)
                 {
-                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(folderPath, "*", SearchOption.TopDirectoryOnly);
+                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(archivePath, "*", SearchOption.TopDirectoryOnly);
 
                     foreach (var directoryPath in directoryPaths)
                     {
@@ -31,7 +31,7 @@ namespace ServerBackupUtility.Services
                         string directoryName = directoryPath.Trim().Substring(index);
 
                         LogService.LogEvent("Creating Archive: " + directoryName);
-                        ZipFile.CreateFromDirectory(directoryPath, _archivePath + directoryName + ".zip", CompressionLevel.Optimal, true);
+                        ZipFile.CreateFromDirectory(directoryPath, _backupPath + directoryName + ".zip", CompressionLevel.Optimal, true);
                     }
                 }
             }
@@ -40,7 +40,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }
 
-            LogService.LogEvent("Finishing Archive Backup Process");
+            LogService.LogEvent("Completed Archive File Compression");
         }
     }
 }

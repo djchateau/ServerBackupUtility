@@ -1,7 +1,7 @@
 
 namespace ServerBackupUtility.Services
 {
-    public interface IDirectUploadService
+    public interface IUploadService
     {
         void UploadBackupFiles(ITransferService transferService);
     }

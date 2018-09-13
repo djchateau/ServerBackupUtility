@@ -9,16 +9,16 @@ namespace ServerBackupUtility
     {
         private readonly ICompressionService _compressionService;
         private readonly ITransferService _transferService;
-        private readonly IDirectUploadService _directUploadService;
-        private readonly IDatabaseUploadService _databaseUploadService;
+        private readonly IUploadService _uploadService;
+        private readonly IDatabaseService _databaseService;
         private readonly IEmailService _emailService;
 
         public ServicesController()
         {
             _compressionService = new CompressionService();
             _transferService = new TransferService();
-            _directUploadService = new DirectUploadService();
-            _databaseUploadService = new DatabaseUploadService();
+            _uploadService = new UploadService();
+            _databaseService = new DatabaseService();
             _emailService = new EmailService();
         }
 
@@ -34,10 +34,10 @@ namespace ServerBackupUtility
             if (_transferService.InitializeFtp())
             {
                 LogService.LogEvent();
-                _directUploadService.UploadBackupFiles(_transferService);
+                _uploadService.UploadBackupFiles(_transferService);
 
                 LogService.LogEvent();
-                _databaseUploadService.BackupDatabases(_transferService);
+                _databaseService.BackupDatabases(_transferService);
             }
 
             LogService.LogEvent("End Scheduled Global Server Backup");

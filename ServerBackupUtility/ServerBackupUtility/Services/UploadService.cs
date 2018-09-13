@@ -10,18 +10,18 @@ using System.Threading;
 
 namespace ServerBackupUtility.Services
 {
-    public class DirectUploadService : IDirectUploadService
+    public class UploadService : IUploadService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _archivePath = ConfigurationManager.AppSettings["ArchivePath"].Trim();
+        private readonly string _backupPath = ConfigurationManager.AppSettings["BackupPath"].Trim();
         private readonly bool _deleteFiles = Convert.ToBoolean(ConfigurationManager.AppSettings["DeleteFiles"].Trim());
 
         public void UploadBackupFiles(ITransferService transferService)
         {
-            StreamReader backupFiles = new StreamReader(_path + "\\ServerBackupFiles.txt", Encoding.UTF8);
+            StreamReader backupFiles = new StreamReader(_path + "\\DirectBackupPaths.txt", Encoding.UTF8);
             ICollection<String> backupPaths = null;
 
-            LogService.LogEvent("Reading Backup File Paths");
+            LogService.LogEvent("Reading Backup Files");
 
             try
             {
@@ -33,7 +33,7 @@ namespace ServerBackupUtility.Services
                     backupPaths.Add(line);
                 }
 
-                backupPaths.Add(_archivePath + "\\*");
+                backupPaths.Add(_backupPath + "\\*");
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: UploadService.UploadBackupFiles #2 - " + ex.Message);
             }
 
-            LogService.LogEvent("Finishing Backup Files Process");
+            LogService.LogEvent("Completed Backup Files Transfer");
         }
     }
 }
