@@ -1,6 +1,7 @@
 ﻿
 using ServerBackupUtility.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
 
@@ -24,25 +25,32 @@ namespace ServerBackupUtility.Services
 
         private void FileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            ServiceController serviceController = new ServiceController("BackupScheduler");
+            Process process = new Process();
 
             try
             {
-                int ms1 = Environment.TickCount;
-                TimeSpan timeout = TimeSpan.FromMilliseconds(5000);
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
-                serviceController.Stop();
-                serviceController.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
+                processStartInfo.WorkingDirectory = _path;
+                processStartInfo.FileName = "RestartScheduler.bat";
+                processStartInfo.CreateNoWindow = true;
+                processStartInfo.LoadUserProfile = false;
+                processStartInfo.UseShellExecute = false;
+                processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-                int ms2 = Environment.TickCount;
-                timeout = TimeSpan.FromMilliseconds(5000 - (ms2 - ms1));
-
-                serviceController.Start();
-                serviceController.WaitForStatus(ServiceControllerStatus.Running, timeout);
+                process.StartInfo = processStartInfo;
+                process.Start();
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("RestartService.RestartWindowsService - " + ex.Message);
+                LogService.LogEvent("RestartService.FileWatcher_Changed - " + ex.Message);
+            }
+            finally
+            {
+                if (process != null)
+                {
+                    process.Close();
+                }
             }
         }
     }

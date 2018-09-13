@@ -10,21 +10,23 @@ ECHO.
 PAUSE
 ECHO.
 ECHO Please wait while the Backup Scheduler service is uninstalled.
-SC stop BackupScheduler > uninstall.log
+SC stop BackupScheduler > nul
 PING -n 5 127.0.0.1 > nul
-SC delete BackupScheduler > uninstall.log
+SC delete BackupScheduler > nul
 ECHO.
-ECHO Removing Server Backup Utility files.
-DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupFiles.txt > uninstall.log
-DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe > uninstall.log
-DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe.config > uninstall.log
-DEL %SYSTEMDRIVE%\BackupUtility\localhost.pfx > uninstall.log
+ECHO Removing application files.
+DEL %SYSTEMDRIVE%\BackupUtility\RestartScheduler.bat > nul
+DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupFiles.txt > nul
+DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe > nul
+DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe.config > nul
+DEL %SYSTEMDRIVE%\BackupUtility\localhost.pfx > nul
 ECHO.
 CHOICE /M "Do you want to remove the Server Backup Utility Log files?"
 IF ERRORLEVEL 2 GOTO END
-RMDIR /S %SYSTEMDRIVE%\BackupUtility\LogFiles > uninstall.log
+RMDIR /S %SYSTEMDRIVE%\BackupUtility\LogFiles > nul
 :END
 ECHO.
-ECHO The Server Backup Utility has been removed.
+ECHO The Server Backup Utility was successfully removed.
+ECHO.
 PAUSE
 @ECHO ON

@@ -16,7 +16,8 @@ ECHO Creating a Backup Utility folder in the system root.
 IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\ (MKDIR %SYSTEMDRIVE%\BackupUtility) > install.log
 IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\LogFiles (MKDIR %SYSTEMDRIVE%\BackupUtility\LogFiles) > install.log
 ECHO.
-ECHO Copying installation files to the Backup Utility folder.
+ECHO Copying application files to the Backup Utility folder.
+COPY ..\Release\RestartScheduler.bat %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupFiles.txt %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility > install.log
@@ -32,6 +33,7 @@ ECHO.
 ECHO Starting the Backup Scheduler Service.
 SC start BackupScheduler > install.log
 ECHO.
-ECHO The Server Backup Utility installation is complete.
+ECHO The Server Backup Utility was successfully installed.
+ECHO.
 PAUSE
 @ECHO ON
