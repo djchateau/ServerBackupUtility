@@ -18,7 +18,7 @@ IF NOT EXIST %SYSTEMDRIVE%\BackupUtility\LogFiles (MKDIR %SYSTEMDRIVE%\BackupUti
 ECHO.
 ECHO Copying application files to the Backup Utility folder.
 COPY ..\Release\RestartScheduler.bat %SYSTEMDRIVE%\BackupUtility > install.log
-COPY ..\Release\ServerBackupFiles.txt %SYSTEMDRIVE%\BackupUtility > install.log
+COPY ..\Release\DirectBackupPaths.txt %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\ServerBackupUtility.exe.config %SYSTEMDRIVE%\BackupUtility > install.log
 COPY ..\Release\localhost.pfx %SYSTEMDRIVE%\BackupUtility > install.log

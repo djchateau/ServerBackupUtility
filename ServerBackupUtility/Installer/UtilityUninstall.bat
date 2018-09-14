@@ -16,7 +16,7 @@ SC delete BackupScheduler > nul
 ECHO.
 ECHO Removing application files.
 DEL %SYSTEMDRIVE%\BackupUtility\RestartScheduler.bat > nul
-DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupFiles.txt > nul
+DEL %SYSTEMDRIVE%\BackupUtility\DirectBackupPaths.txt > nul
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe > nul
 DEL %SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe.config > nul
 DEL %SYSTEMDRIVE%\BackupUtility\localhost.pfx > nul
