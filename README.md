@@ -7,10 +7,14 @@ Utility Application to Backup Files from a Windows Server to an FTP Server
 Dependencies: This Windows application requires the .Net Framework v.4.7.2 to be installed on the server.
 
 You can download the v.4.7.2 run-time here:
-https://www.microsoft.com/net/download/thank-you/net472
+    https://www.microsoft.com/net/download/thank-you/net472
 
 You can download the v.4.7.2 developer pack here:
-https://go.microsoft.com/fwlink/?LinkId=863261
+    https://go.microsoft.com/fwlink/?LinkId=863261
+
+A gracious thank you goes out to Caphyon Ltd. for providing us with a copy of their Advanced Installer program.
+If you need an installer application, check it out. It's the best one I've found.
+    https://www.advancedinstaller.com
 
 
 Server Backup Utility Installation Instructions
@@ -65,13 +69,13 @@ ServerBackupUtility.exe.config File
     add key="Mode" value="clock"
 
 - Clock Time in 24 Hour Format \
-    add key="Clock" value="06:45"
+    add key="Clock" value="03:00"
 
 - Interval Time in Minutes \
     add key="Interval" value="60"
 
-- List of folders separated by pipe characters, containing target sub-folders to be archived for backup. \
-    You cannot archive a root folder. Place your files in a sub-folder and add the root folder here.
+- List of folders separated by pipe characters, containing target sub-folders to be archived for backup.
+    You cannot archive a root folder. Place your files in a sub-folder and add the root folder here. \
 	add key="ArchivePaths" value="D:\Webs|D:\Media"
 
 - Folder to place archived files for backup. All files in this folder will be transfered to the FTP server.
@@ -79,11 +83,11 @@ ServerBackupUtility.exe.config File
 	add key="BackupPath" value="D:\Backups"
    
 - Folder to place the database archives. We do not recommend archiving database files with this utility.
-  Use your database maintenance utility to archive your databases and place the backups in this folder. \
+    Use your database maintenance utility to archive your databases and place the backups in this folder. \
 	add key="DatabasePath" value="D:\SqlServerDataFiles\Backup"
 
-- You can delete the archived and database files from the Windows Server after they have been transferred
-  to the FTP server. You can use this switch so old backup files don't accumulate on the Windows server. \
+- You can use this setting so old backup files don't accumulate on the Windows server. Just delete
+    the archived files from the Windows Server after they have been transferred to the FTP server. \
     add key="DeleteFiles" value="true"
 
 - Url of the FTP server \
@@ -108,7 +112,7 @@ ServerBackupUtility.exe.config File
 - Use the Email SMTP client to send log notifications. \
 	add key="EmailService" value="true"
 
-The following settings are only required if the Email Service setting above is true.
+The following settings are only required if the Email Service setting is enabled.
 
 - SMTP user account name \
 	add key="SmptUserName" value="services"
@@ -158,15 +162,15 @@ Network Service: SC create BackupScheduler \
 binPath= "%SYSTEMDRIVE%\BackupUtility\ServerBackupUtility.exe" start= auto obj= "NT AUTHORITY\NETWORK SERVICE" \
 password= "" > install.log
 
-If you have trouble installing the permissions, write me and I'll walk you through it.
+We are currently in the process of adding an installer program to the application. Until it is implemented,
+if you're having trouble installing the permissions, write to me and I'll walk you through them.
 
 
 Miscellaneous Notes
 ---------------------
 
 If you change a setting in the Config file while the utility is running, the Scheduler will automatically restart
-itself to pick up the new setting. You can also restart the Scheduler by running the RestartScheduler.bat file in
-Administrator mode.
+itself to pick up the new setting. You can also restart the Scheduler by running the RestartScheduler.bat file.
 
 Because of the way we use dates as back-up folders on the FTP server, it is not a good idea to set the start time
 too close to Midnight. For example, if you have enough files so that the entire back-up takes 15 minutes to complete
@@ -176,7 +180,7 @@ start time to 00:00.
 
 Although this code is still in development, the code on which it is based has been running reliably in a production
 environment for over a year. The only new features not tested are the SSL/TLS Encrypted file and Email transfers.
-You should be able to depend on this code for backups and email messages in Unencrypted mode. However, we would
+You should be able to depend on this code for backups and email messages in unencrypted mode. However, we would
 appreciate your testing the code using SSL/TLS, and reporting the results back to us.
 
 The utility does not currently use the Windows Volume Shadow Copy service while creating the Web site archives.
@@ -185,8 +189,8 @@ plug-in was scanning the site. By adjusting the Scheduler time to avoid activati
 plug-in scans, we were able to avoid any conflicts. The utility has been archiving and backing up over 10 large
 IIS Web sites every day without issue. Regardless, we don't recommend copying and archiving databases directly,
 until the Volume Shadow Copy code has been implemented in the application. For the time being, use your database
-maintenance program to copy and archive your databases, and copy them the Database backup folder for the utility
-to upload.
+maintenance program to archive your databases, and copy them to the Database backup folder for the utility to
+upload.
 
 Licensed under GNU GENERAL PUBLIC LICENSE - Version 3, 29 June 2007
 
