@@ -6,11 +6,16 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBackupUtility", "ServerBackupUtility\ServerBackupUtility.csproj", "{2614C9F4-A15E-42DB-82CA-58077705BAD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{E9E580A3-286D-4FB4-92B7-BFCA655C23C0}"
+	ProjectSection(SolutionItems) = preProject
+		Installer\ServerBackupUtility.exe = Installer\ServerBackupUtility.exe
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{6FD73538-C0AE-4DB9-B37D-1413030319C6}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\License.txt = Resources\License.txt
-		Resources\Readme.txt = Resources\Readme.txt
+		Resources\green.bmp = Resources\green.bmp
+		Resources\License.rtf = Resources\License.rtf
+		Resources\Readme.rtf = Resources\Readme.rtf
+		Resources\services.ico = Resources\services.ico
 	EndProjectSection
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "InstallerSetup", "InstallerSetup\InstallerSetup.aiproj", "{E0CFB42A-4485-4D57-98C8-BC45A76D0196}"
