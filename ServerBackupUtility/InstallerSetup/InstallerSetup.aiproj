@@ -1,0 +1,37 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>e0cfb42a-4485-4d57-98c8-bc45a76d0196</ProjectGuid>
+    <OutputType>msi</OutputType>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>InstallerSetup.aip</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <IsWindowsApplication>True</IsWindowsApplication>
+    <AssemblyName>InstallerSetup</AssemblyName>
+    <Name>InstallerSetup</Name>
+    <RootNamespace>InstallerSetup</RootNamespace>
+    <LoadFromTemplate>
+    </LoadFromTemplate>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' ">
+    <OutputPath>C:\source\repos\ServerBackupUtility\ServerBackupUtility\Installer</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="InstallerSetup.aip">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServerBackupUtility\ServerBackupUtility.csproj">
+      <Name>ServerBackupUtility</Name>
+      <Project>{2614c9f4-a15e-42db-82ca-58077705bad6}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput;ContentOutput</OutputsToImport>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />
+  <Import Condition="'$(AdvancedInstallerMSBuildTargets)' == ''" Project="$(MSBuildExtensionsPath32)\Caphyon\Advanced Installer\AdvInstExtTasks.Targets" />
+</Project>

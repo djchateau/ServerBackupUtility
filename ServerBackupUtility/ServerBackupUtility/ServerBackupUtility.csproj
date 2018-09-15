@@ -110,7 +110,8 @@
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>app-icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -189,7 +190,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app-icon.ico" />
     <Content Include="DirectBackupPaths.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
