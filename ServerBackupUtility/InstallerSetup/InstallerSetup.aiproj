@@ -17,7 +17,7 @@
     </LoadFromTemplate>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' ">
-    <OutputPath>C:\source\repos\ServerBackupUtility\ServerBackupUtility\Installer</OutputPath>
+    <OutputPath>C:\source\repos\ServerBackupUtility</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="InstallerSetup.aip">
