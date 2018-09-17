@@ -4,10 +4,12 @@ ServerBackupUtility
 
 Utility Application to Backup Files from a Windows Server to an FTP Server
 
-Dependencies: This Windows application requires the .Net Framework v.4.7.2 run-time to be installed on the server. The installer program will install this run-time version on the server during the install, but you will need to install the developer pack version on your machine, if you want to run the Visual Studio solution. In addition, you will need to install the Advanced Installer Visual Studio extension if you want to open the installer project.
+This application is designed to run on a dedicated Windows server or a virtual Windows server. It cannot be installed on an IIS shared hosting server, except at the Windows server administrative level.
+
+Dependencies: This application requires the .Net Framework v.4.7.2 run-time to be installed on the server. The installer program will install this run-time version during the install, but you will need to install the developer pack version on your machine, if you want to run the Visual Studio solution. In addition, you will need to install the Advanced Installer Visual Studio extension if you want to open the installer project.
 
 You can download the .Net Framework v.4.7.2 Visual Studio developer pack here: \
-    https://go.microsoft.com/fwlink/?LinkId=863261 \
+    https://go.microsoft.com/fwlink/?LinkId=863261
 
 A gracious thank you goes out to Caphyon Ltd. for providing us with a copy of their Advanced Installer program. If you need an installer application, check it out. It's the best one I've found. \
     https://www.advancedinstaller.com
