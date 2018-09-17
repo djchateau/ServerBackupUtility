@@ -67,13 +67,13 @@ ServerBackupUtility.exe.config File
 -----------------------------------
 
 - Scheduler Mode - Select Clock for daily backup on a regular schedule or Interval for repetitive tasks. \
-    add key="Mode" value="clock"
+    add key="SchedulerMode" value="clock"
 
 - Clock Time in 24 Hour Format \
-    add key="Clock" value="03:00"
+    add key="ClockTime" value="03:00"
 
 - Interval Time in Minutes \
-    add key="Interval" value="60"
+    add key="IntervalTime" value="60"
 
 - List of root folders separated by pipe characters, containing target sub-folders to be archived for backup. You cannot archive a root folder. Place your files in a sub-folder and add the root folder here. You can have as many sub-folders as you wish. \
 	add key="ArchivePaths" value="D:\Webs|D:\Media"

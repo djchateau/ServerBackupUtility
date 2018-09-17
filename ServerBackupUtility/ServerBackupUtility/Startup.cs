@@ -13,9 +13,9 @@ namespace ServerBackupUtility
         private Timer _scheduler = null;
         private IRestartService _restartService = null;
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private string _mode = ConfigurationManager.AppSettings["Mode"].ToLower();
-        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["Clock"]);
-        private int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
+        private string _mode = ConfigurationManager.AppSettings["SchedulerMode"].ToLower();
+        private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["ClockTime"]);
+        private int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalTime"]);
 
         public Startup()
         {
