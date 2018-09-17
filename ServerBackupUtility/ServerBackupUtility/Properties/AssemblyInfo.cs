@@ -1,4 +1,12 @@
 
+/*
+    This Program is Free Software: You can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3 of the License.
+
+    See the accompaning License.rtf file for further details.
+*/
+
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -15,6 +23,6 @@ using System.Runtime.InteropServices;
 [assembly: Guid("2614c9f4-a15e-42db-82ca-58077705bad6")]
 
 [assembly: AssemblyVersion(version: "1.8.233")]
-[assembly: AssemblyFileVersion(version: "1.8.232")]
+[assembly: AssemblyFileVersion(version: "1.8.233")]
 [assembly: AssemblyInformationalVersion(informationalVersion: "1.8.233")]
 
