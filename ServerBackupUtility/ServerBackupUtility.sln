@@ -7,7 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerBackupUtility", "Serv
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{6FD73538-C0AE-4DB9-B37D-1413030319C6}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\green.bmp = Resources\green.bmp
 		Resources\License.rtf = Resources\License.rtf
 		Resources\Readme.txt = Resources\Readme.txt
 		Resources\services.ico = Resources\services.ico
