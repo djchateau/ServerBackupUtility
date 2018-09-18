@@ -4,6 +4,8 @@ ServerBackupUtility
 
 Utility Application to Backup Files from a Windows Server to an FTP Server
 
+ServerBackupUtility contains a scheduler service to run backups on a daily schedule, a compression service for archiving folders, multiple configurable file paths to target any files on the server, pattern matching for file names, FTP and FTPS (FTP over SSL) file transfers, and SMTP email log notifications.
+
 This application is designed to run on a dedicated Windows server or a virtual Windows server. It cannot be installed on an IIS shared hosting server, except at the Windows server administrative level.
 
 Dependencies: This application requires the .Net Framework v.4.7.2 run-time to be installed on the server. The installer program will install this run-time version during the install, but you will need to install the developer pack version on your machine, if you want to run the Visual Studio solution. In addition, you will need to install the Advanced Installer Visual Studio extension if you want to open the installer project.
