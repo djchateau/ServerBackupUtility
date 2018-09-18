@@ -53,7 +53,7 @@ namespace ServerBackupUtility
                 switch (_mode)
                 {
                     case "clock":
-                        if (_time > DateTime.Parse("23:45") && _time < DateTime.Parse("00:00"))
+                        if (_time > DateTime.Parse("23:30") && _time < DateTime.Parse("00:00"))
                         {
                             _time = DateTime.Parse("00:00");
                         }

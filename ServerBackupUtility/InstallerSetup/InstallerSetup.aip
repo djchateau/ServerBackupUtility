@@ -44,10 +44,10 @@
     <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:green.bmp" Type="1" MsiKey="AppLogoIcon"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:1"/>
     <ROW Property="Manufacturer" Value="Open Source"/>
-    <ROW Property="ProductCode" Value="1033:{FD44D222-B233-4206-B261-1F109728737C} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{59926CFD-3C2C-4C1E-BFE6-6E6A02FBEB05} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Server Backup Utility"/>
-    <ROW Property="ProductVersion" Value="1.8.233" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.9.261" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{A7EA91BA-5F80-401D-B2DC-E065D9731D13}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>

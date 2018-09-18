@@ -145,7 +145,7 @@ Miscellaneous Notes
 
 If you change settings in the config file while the utility is running, the Backup Scheduler will automatically restart itself to pick up the new settings. You can also restart the Backup Scheduler manually by running the RestartScheduler.bat file.
 
-Because of the way we use dates as back-up folders on the FTP server, it is not a good idea to set the start time too close to Midnight. For example, if you have enough files so that the entire back-up takes 15 minutes to complete and you start the back-up at 23:50, the resultant files on the FTP server will be split into two folders because of the date change. So, if you schedule a backup between 23:45 and 00:00, the software will automatically move the start time to 00:00.
+Because of the way we use dates as back-up folders on the FTP server, it is not a good idea to set the start time too close to Midnight. For example, if you have enough files so that the entire back-up takes 15 minutes to complete and you start the back-up at 23:50, the resultant files on the FTP server will be split into two folders because of the date change. So, if you schedule a backup between 23:30 and 00:00, the software will automatically move the start time to 00:00.
 
 Although this code is still in development, the code on which it is based has been running reliably in a production environment for over a year. The only new features not tested are the SSL/TLS Encrypted file and Email transfers. You should be able to depend on this code for backups and email messages in unencrypted mode. However, we would appreciate your testing the code using SSL/TLS, and reporting the results back to us.
 
