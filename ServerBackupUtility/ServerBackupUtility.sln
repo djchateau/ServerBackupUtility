@@ -14,6 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "InstallerSetup", "InstallerSetup\InstallerSetup.aiproj", "{E0CFB42A-4485-4D57-98C8-BC45A76D0196}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BB2B9721-3B55-482E-9700-72A71ABBDFF3}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\AlphaVSS.Common.dll = Libraries\AlphaVSS.Common.dll
+		Libraries\AlphaVSS.x64.dll = Libraries\AlphaVSS.x64.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
