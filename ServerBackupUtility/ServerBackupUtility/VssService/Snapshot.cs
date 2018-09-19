@@ -1,5 +1,6 @@
 ﻿
 using Alphaleonis.Win32.Vss;
+using ServerBackupUtility.Logging;
 using System;
 
 namespace ServerBackupUtility.VssService
@@ -19,36 +20,11 @@ namespace ServerBackupUtility.VssService
         // Identifier for our single snapshot volume
         private Guid _snapshotVolumeId;
 
-        // We save the GUID of this snapshot in order to refer to it elsewhere in the class.
+        // Save the GUID of this snapshot in order to refer to it elsewhere in the class.
         public Snapshot(IVssBackupComponents backup)
         {
             _backup = backup;
             _snapshotSetId = backup.StartSnapshotSet();
-        }
-
-        // Adds a volume to the current snapshot
-        public void AddVolume(string volumeName)
-        {
-            if (_backup.IsVolumeSupported(volumeName))
-            {
-                _snapshotVolumeId = _backup.AddToSnapshotSet(volumeName);
-            }
-            else
-            {
-                throw new VssVolumeNotSupportedException(volumeName);
-            }
-        }
-
-        // Create the actual snapshot. This process can take around 10 seconds.
-        public void Copy()
-        {
-            _backup.DoSnapshotSet();
-        }
-
-        // Remove all snapshots.
-        public void DeleteSnapshots()
-        {
-            _backup.DeleteSnapshotSet(_snapshotSetId, false);
         }
 
         // Gets the string that identifies the root of this snapshot
@@ -65,15 +41,40 @@ namespace ServerBackupUtility.VssService
             }
         }
 
+        // Add a volume to the current snapshot.
+        public void AddVolume(string volumeName)
+        {
+            if (_backup.IsVolumeSupported(volumeName))
+            {
+                _snapshotVolumeId = _backup.AddToSnapshotSet(volumeName);
+            }
+            else
+            {
+                LogService.LogEvent("Error: Snapshot.AddVolume - Vss Volume Not Supported");
+            }
+        }
+
+        // Create the actual snapshot. This process can take around 10 seconds.
+        public void Copy()
+        {
+            _backup.DoSnapshotSet();
+        }
+
+        // Remove all snapshots.
+        public void DeleteSnapshots()
+        {
+            _backup.DeleteSnapshotSet(_snapshotSetId, false);
+        }
+
         public void Dispose()
         {
             try
             {
                 DeleteSnapshots();
             }
-            catch
+            catch (VssDeleteSnapshotsFailedException ex)
             {
-                // Empty
+                LogService.LogEvent("Error: Snapshot.Dispose - " + ex.Message);
             }
 
             Dispose(true);
