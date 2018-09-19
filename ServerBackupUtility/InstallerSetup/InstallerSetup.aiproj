@@ -29,7 +29,7 @@
       <Name>ServerBackupUtility</Name>
       <Project>{2614c9f4-a15e-42db-82ca-58077705bad6}</Project>
       <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;ContentOutput</OutputsToImport>
+      <OutputsToImport>ContentOutput</OutputsToImport>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />
