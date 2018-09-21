@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -46,7 +47,7 @@ namespace ServerBackupUtility.Services
 
             try
             {
-                if (backupPaths != null)
+                if (backupPaths.Any())
                 {
                     foreach (var backupPath in backupPaths)
                     {
@@ -56,15 +57,18 @@ namespace ServerBackupUtility.Services
 
                         IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
 
-                        foreach (var filePath in filePaths)
+                        if (filePaths.Any())
                         {
-                            string fileName = Path.GetFileName(filePath);
-                            LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
-
-                            if (transferService.UploadFile(filePath))
+                            foreach (var filePath in filePaths)
                             {
-                                Thread.Sleep(1000);
-                                if (_deleteFiles) { File.Delete(filePath); }
+                                string fileName = Path.GetFileName(filePath);
+                                LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
+
+                                if (transferService.UploadFile(filePath))
+                                {
+                                    Thread.Sleep(1000);
+                                    if (_deleteFiles) { File.Delete(filePath); }
+                                }
                             }
                         }
                     }

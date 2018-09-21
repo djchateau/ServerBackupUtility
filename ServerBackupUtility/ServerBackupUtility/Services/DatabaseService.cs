@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace ServerBackupUtility.Services
@@ -21,17 +22,20 @@ namespace ServerBackupUtility.Services
 
             try
             {
-                foreach (var dbFilePath in dbFilePaths)
+                if (dbFilePaths.Any())
                 {
-                    int index = dbFilePath.Trim().LastIndexOf('\\');
-                    string dbName = dbFilePath.Trim().Substring(index + 1);
-
-                    LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
-
-                    if (transferService.UploadFile(dbFilePath))
+                    foreach (var dbFilePath in dbFilePaths)
                     {
-                        Thread.Sleep(1000);
-                        if (_deleteFiles) { File.Delete(dbFilePath); }
+                        int index = dbFilePath.Trim().LastIndexOf('\\');
+                        string dbName = dbFilePath.Trim().Substring(index + 1);
+
+                        LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
+
+                        if (transferService.UploadFile(dbFilePath))
+                        {
+                            Thread.Sleep(1000);
+                            if (_deleteFiles) { File.Delete(dbFilePath); }
+                        }
                     }
                 }
             }

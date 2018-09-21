@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 namespace ServerBackupUtility.Services
 {
@@ -21,17 +22,23 @@ namespace ServerBackupUtility.Services
 
             try
             {
-                foreach (var archivePath in archivePaths)
+                if (archivePaths.Any())
                 {
-                    IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(archivePath, "*", SearchOption.TopDirectoryOnly);
-
-                    foreach (var directoryPath in directoryPaths)
+                    foreach (var archivePath in archivePaths)
                     {
-                        int index = directoryPath.Trim().LastIndexOf('\\');
-                        string directoryName = directoryPath.Trim().Substring(index);
+                        IEnumerable<String> directoryPaths = Directory.EnumerateDirectories(archivePath, "*", SearchOption.TopDirectoryOnly);
 
-                        LogService.LogEvent("Creating Archive: " + directoryName);
-                        ZipFile.CreateFromDirectory(directoryPath, _backupPath + directoryName + ".zip", CompressionLevel.Optimal, true);
+                        if (directoryPaths.Any())
+                        {
+                            foreach (var directoryPath in directoryPaths)
+                            {
+                                int index = directoryPath.Trim().LastIndexOf('\\');
+                                string directoryName = directoryPath.Trim().Substring(index);
+
+                                LogService.LogEvent("Creating Archive: " + directoryName);
+                                ZipFile.CreateFromDirectory(directoryPath, _backupPath + directoryName + ".zip", CompressionLevel.Optimal, true);
+                            }
+                        }
                     }
                 }
             }
