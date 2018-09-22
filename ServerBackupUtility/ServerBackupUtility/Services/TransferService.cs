@@ -22,6 +22,9 @@ namespace ServerBackupUtility.Services
 
         public bool InitializeFtp()
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
+
             LogService.LogEvent("Contacting FTP Server For Login");
 
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
@@ -29,8 +32,6 @@ namespace ServerBackupUtility.Services
             NetworkCredential networkCredential = new NetworkCredential();
             networkCredential.UserName = _userName;
             networkCredential.Password = _password;
-
-            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
 
             FtpWebResponse response = null;
 
@@ -77,13 +78,14 @@ namespace ServerBackupUtility.Services
 
         public bool UploadFile(string filePath)
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
+
             Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
 
             NetworkCredential networkCredential = new NetworkCredential();
             networkCredential.UserName = _userName;
             networkCredential.Password = _password;
-
-            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
 
             FileStream fileStream = null;
             FtpWebResponse response = null;

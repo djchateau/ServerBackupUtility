@@ -25,6 +25,7 @@ namespace ServerBackupUtility.Services
 
         public void SendMail(string messageBody)
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
             X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
 
             MailMessage mailMessage = null;

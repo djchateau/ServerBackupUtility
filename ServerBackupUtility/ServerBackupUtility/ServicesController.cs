@@ -24,8 +24,6 @@ namespace ServerBackupUtility
 
         public void RunBackup()
         {
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-
             LogService.LogEvent();
             _compressionService.CreateArchives();
 
