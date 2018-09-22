@@ -43,7 +43,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("RestartService.FileWatcher_Changed - " + ex.Message);
+                LogService.LogEvent("Error: RestartService.FileWatcher_Changed - " + ex.Message);
             }
             finally
             {

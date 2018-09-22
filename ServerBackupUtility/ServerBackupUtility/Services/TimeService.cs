@@ -40,7 +40,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("TimeService.DateTimeUniversal - " + ex.Message);
+                LogService.LogEvent("Error: TimeService.DateTimeUniversal - " + ex.Message);
             }
             finally
             {

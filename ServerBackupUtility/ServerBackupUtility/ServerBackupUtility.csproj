@@ -27,7 +27,7 @@
     </AssemblyInfoVersionSettings>
     <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
     <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
-    <AssemblyVersion>1.9.264</AssemblyVersion>
+    <AssemblyVersion>1.9.265</AssemblyVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -387,9 +387,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DirectBackupPaths.txt">
+    <None Include="DirectBackupPaths.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

@@ -19,7 +19,7 @@ namespace ServerBackupUtility.Services
 
         public void UploadBackupFiles(ITransferService transferService)
         {
-            StreamReader backupFiles = new StreamReader(_path + "\\DirectBackupPaths.txt", Encoding.UTF8);
+            StreamReader backupFiles = new StreamReader(_path + "\\DirectBackupPaths.config", Encoding.UTF8);
             ICollection<String> backupPaths = null;
 
             LogService.LogEvent("Reading Backup Files");
@@ -79,7 +79,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: UploadService.UploadBackupFiles #2 - " + ex.Message);
             }
 
-            LogService.LogEvent("Completed Backup Files Transfer");
+            LogService.LogEvent("Finished Backup Files Transfer");
         }
     }
 }

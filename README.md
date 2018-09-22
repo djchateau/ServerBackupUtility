@@ -43,7 +43,7 @@ Questions, Suggestions or Feature Requests
 You can reach me at fwchateau@gmail.com. Add Server Backup Utility to the subject line. I filter this email address to eliminate SPAM. If you do not add the phrase Server Backup Utility to the subject line, I may not see your email.
 
 
-DirectBackupPaths.txt File
+DirectBackupPaths.config File
 --------------------------
 
 Each line should contain a folder path ending with a file name, or a pattern match to a set of file names. The match pattern is recursive below the target folder. This can be changed in the Upload Service code using SearchOptions.TopDirectoriesOnly.

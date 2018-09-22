@@ -20,7 +20,7 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_DirectBackupPaths.txt" Value="..\ServerBackupUtility\bin\x64\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_RestartScheduler.bat" Value="..\ServerBackupUtility\bin\x64\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_localhost.pfx" Value="..\ServerBackupUtility\bin\x64\Release"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DirectBackupPaths.txt" Value="DirectBackupPaths.txt"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DirectBackupPaths.txt" Value="DirectBackupPaths.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_RestartScheduler.bat" Value="RestartScheduler.bat"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_localhost.pfx" Value="localhost.pfx"/>
     <ROW Property="AI_REQUIRED_DOTNET_DISPLAY" MultiBuildValue="DefaultBuild:4.7.2" ValueLocId="-"/>

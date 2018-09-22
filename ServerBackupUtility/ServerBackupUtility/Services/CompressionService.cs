@@ -47,7 +47,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }
 
-            LogService.LogEvent("Completed Archive File Compression");
+            LogService.LogEvent("Finished Archive File Compression");
         }
     }
 }
