@@ -18,7 +18,23 @@ namespace ServerBackupUtility.Services
         {
             LogService.LogEvent("Reading Archive File Paths");
 
-            string[] archivePaths = _archivePaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] archivePaths = null;
+
+            if (!String.IsNullOrEmpty(_archivePaths))
+            {
+                archivePaths = _archivePaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                LogService.LogEvent("No Archive Paths Folder Specified - Skipping Folder Archiving");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(_backupPath))
+            {
+                LogService.LogEvent("No Backup Path Folder Specified - Skipping Folder Archiving");
+                return;
+            }
 
             try
             {

@@ -18,7 +18,17 @@ namespace ServerBackupUtility.Services
         {
             LogService.LogEvent("Reading Database Files");
 
-            IEnumerable<String> dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
+            IEnumerable<String> dbFilePaths = null;
+
+            if (!String.IsNullOrEmpty(_databasePath))
+            {
+                dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
+            }
+            else
+            {
+                LogService.LogEvent("No Database Folder Specified - Skipping Database Files Backup");
+                return;
+            }
 
             try
             {

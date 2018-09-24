@@ -19,11 +19,29 @@ namespace ServerBackupUtility.Services
 
         public void UploadBackupFiles(ITransferService transferService)
         {
-            StreamReader backupFiles = new StreamReader(_path + "\\DirectBackupPaths.config", Encoding.UTF8);
-            ICollection<String> backupPaths = null;
-
             LogService.LogEvent("Reading Backup Files");
 
+            StreamReader backupFiles = null;
+            ICollection<String> backupPaths = null;
+
+            if (!String.IsNullOrEmpty(_backupPath))
+            {
+                if (File.Exists(_path + "\\DirectBackupPaths.config"))
+                {
+                    backupFiles = new StreamReader(_path + "\\DirectBackupPaths.config", Encoding.UTF8);
+                }
+                else
+                {
+                    LogService.LogEvent("Missing DirectBackupPaths.config File - Skipping Direct Backup Files Upload");
+                    return;
+                }
+            }
+            else
+            {
+                LogService.LogEvent("No Backup Path Folder Specified - Skipping Direct Backup Files Upload");
+                return;
+            }
+            
             try
             {
                 string line;
