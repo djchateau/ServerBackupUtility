@@ -70,9 +70,9 @@ namespace ServerBackupUtility.Services
                 {
                     foreach (var backupPath in backupPaths)
                     {
-                        int index1 = backupPath.Trim().LastIndexOf('\\');
-                        string filePattern = backupPath.Trim().Substring(index1 + 1);
-                        string folderPath = backupPath.Trim().Substring(0, index1);
+                        int index1 = backupPath.LastIndexOf('\\');
+                        string filePattern = backupPath.Substring(index1 + 1);
+                        string folderPath = backupPath.Substring(0, index1);
 
                         IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
 

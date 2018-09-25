@@ -55,7 +55,7 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: DatabaseService.BackupDatabases - " + ex.Message);
             }
 
-            LogService.LogEvent("Finiahed Database Files Transfer");
+            LogService.LogEvent("Finished Database Files Transfer");
             LogService.LogEvent();
         }
     }
