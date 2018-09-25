@@ -17,9 +17,9 @@
     <ROW Property="AI_NO_BORDER_NORMAL" MsiKey="AI_NO_BORDER_NORMAL"/>
     <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_DOTNET_VERSION"/>
     <ROW Property="AI_PRODUCTNAME_ARP" Value="[|ProductName]"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DirectBackupPaths.txt" Value="..\ServerBackupUtility\bin\x64\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_RestartScheduler.bat" Value="..\ServerBackupUtility\bin\x64\Debug"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_localhost.pfx" Value="..\ServerBackupUtility\bin\x64\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_DirectBackupPaths.txt" Value="..\ServerBackupUtility\bin\x64\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_RestartScheduler.bat" Value="..\ServerBackupUtility\bin\x64\Release"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_localhost.pfx" Value="..\ServerBackupUtility\bin\x64\Release"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_DirectBackupPaths.txt" Value="DirectBackupPaths.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_RestartScheduler.bat" Value="RestartScheduler.bat"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_localhost.pfx" Value="localhost.pfx"/>
