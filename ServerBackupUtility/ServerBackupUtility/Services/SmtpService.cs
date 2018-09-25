@@ -7,31 +7,30 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ServerBackupUtility.Services
 {
     public class SmtpService : ISmtpService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _userName = ConfigurationManager.AppSettings["SmtpUserName"];
-        private readonly string _password = ConfigurationManager.AppSettings["SmtpPassword"];
-        private readonly string _smtpHost = ConfigurationManager.AppSettings["SmtpHost"];
-        private readonly int _smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"]);
-        private readonly bool _smtpSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"]);
-        private readonly string _sender = ConfigurationManager.AppSettings["SmtpSender"];
-        private readonly string _recipient = ConfigurationManager.AppSettings["SmtpRecipient"];
+        private readonly string _userName = ConfigurationManager.AppSettings["SmtpUserName"].Trim();
+        private readonly string _password = ConfigurationManager.AppSettings["SmtpPassword"].Trim();
+        private readonly string _smtpHost = ConfigurationManager.AppSettings["SmtpHost"].Trim();
+        private readonly int _smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["SmtpPort"].Trim());
+        private readonly bool _smtpSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SmtpSsl"].Trim());
+        private readonly string _sender = ConfigurationManager.AppSettings["SmtpSender"].Trim();
+        private readonly string _recipient = ConfigurationManager.AppSettings["SmtpRecipient"].Trim();
 
         private readonly string _subject = "Daily Backup Report - " + DateTime.Now.ToLongDateString();
 
-        public void SendMail(string messageBody)
+        public async Task SendMailAsync(string messageBody)
         {
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
-
             MailMessage mailMessage = null;
             SmtpClient smtpClient = null;
 
-            try {
+            try
+            {
                 mailMessage = new MailMessage(_sender, _recipient);
                 mailMessage.Body = messageBody;
                 mailMessage.BodyEncoding = Encoding.UTF8;
@@ -45,6 +44,8 @@ namespace ServerBackupUtility.Services
                 credentials.UserName = _userName;
                 credentials.Password = _password;
 
+                X509Certificate2 certificate2 = new X509Certificate2(_path + "\\localhost.pfx", "secret");
+
                 smtpClient = new SmtpClient();
                 smtpClient.Host = _smtpHost;
                 smtpClient.UseDefaultCredentials = false;
@@ -55,11 +56,11 @@ namespace ServerBackupUtility.Services
                 smtpClient.DeliveryFormat = SmtpDeliveryFormat.International;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                smtpClient.Send(mailMessage);
+                await smtpClient.SendMailAsync(mailMessage);
             }
             catch (Exception ex)
             {
-                LogService.LogSmtpError("Error: EmailService.SendEmail - " + ex.Message);
+                LogService.LogSmtpError("Error: EmailService.SendEmailAsync - " + ex.Message);
             }
             finally
             {

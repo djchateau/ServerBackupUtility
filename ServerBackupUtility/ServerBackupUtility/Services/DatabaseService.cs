@@ -17,6 +17,7 @@ namespace ServerBackupUtility.Services
         public void BackupDatabases(ITransferService transferService)
         {
             LogService.LogEvent("Reading Database Files");
+            LogService.LogEvent();
 
             IEnumerable<String> dbFilePaths = null;
 
@@ -41,7 +42,7 @@ namespace ServerBackupUtility.Services
 
                         LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
 
-                        if (transferService.UploadFile(dbFilePath))
+                        if (transferService.UploadFileAsync(dbFilePath).Result)
                         {
                             Thread.Sleep(1000);
                             if (_deleteFiles) { File.Delete(dbFilePath); }
@@ -55,6 +56,7 @@ namespace ServerBackupUtility.Services
             }
 
             LogService.LogEvent("Finiahed Database Files Transfer");
+            LogService.LogEvent();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ServerBackupUtility.Services
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");
-        private readonly bool _emailService = Convert.ToBoolean(ConfigurationManager.AppSettings["EmailService"]);
+        private readonly bool _emailService = Convert.ToBoolean(ConfigurationManager.AppSettings["EmailService"].Trim());
 
         public void CreateMessge()
         {
@@ -27,7 +27,7 @@ namespace ServerBackupUtility.Services
                     string logFile = streamReader.ReadToEnd();
 
                     ISmtpService emailService = new SmtpService();
-                    emailService.SendMail("\r\n" + logFile + "\r\n");
+                    emailService.SendMailAsync("\r\n" + logFile + "\r\n").ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

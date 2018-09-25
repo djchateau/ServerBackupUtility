@@ -1,7 +1,7 @@
 ﻿
 namespace ServerBackupUtility.Services
 {
-    public interface ICompressionService
+    public interface IArchiveService
     {
         void CreateArchives();
     }

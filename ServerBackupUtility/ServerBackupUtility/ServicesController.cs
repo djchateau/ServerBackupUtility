@@ -7,7 +7,7 @@ namespace ServerBackupUtility
 {
     public class ServicesController
     {
-        private readonly ICompressionService _compressionService;
+        private readonly IArchiveService _archiveService;
         private readonly ITransferService _transferService;
         private readonly IUploadService _uploadService;
         private readonly IDatabaseService _databaseService;
@@ -15,7 +15,7 @@ namespace ServerBackupUtility
 
         public ServicesController()
         {
-            _compressionService = new CompressionService();
+            _archiveService = new ArchiveService();
             _transferService = new TransferService();
             _uploadService = new UploadService();
             _databaseService = new DatabaseService();
@@ -24,14 +24,15 @@ namespace ServerBackupUtility
 
         public void RunBackup()
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+
             LogService.LogEvent();
-            _compressionService.CreateArchives();
+            _archiveService.CreateArchives();
 
             LogService.LogEvent();
 
-            if (_transferService.InitializeFtp())
+            if (_transferService.InitializeFtpAsync().Result)
             {
-                LogService.LogEvent();
                 _uploadService.UploadBackupFiles(_transferService);
 
                 LogService.LogEvent();

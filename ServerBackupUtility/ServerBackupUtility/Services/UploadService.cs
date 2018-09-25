@@ -20,6 +20,7 @@ namespace ServerBackupUtility.Services
         public void UploadBackupFiles(ITransferService transferService)
         {
             LogService.LogEvent("Reading Backup Files");
+            LogService.LogEvent();
 
             StreamReader backupFiles = null;
             ICollection<String> backupPaths = null;
@@ -82,7 +83,7 @@ namespace ServerBackupUtility.Services
                                 string fileName = Path.GetFileName(filePath);
                                 LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
 
-                                if (transferService.UploadFile(filePath))
+                                if (transferService.UploadFileAsync(filePath).Result)
                                 {
                                     Thread.Sleep(1000);
                                     if (_deleteFiles) { File.Delete(filePath); }
