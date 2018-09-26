@@ -35,8 +35,15 @@ namespace ServerBackupUtility.Services
                 }
                 finally
                 {
-                    streamReader.Close();
-                    fileStream.Close();
+                    if (streamReader != null)
+                    {
+                        streamReader.Close();
+                    }
+
+                    if (fileStream != null)
+                    {
+                        fileStream.Close();
+                    }
                 }
             }
         }

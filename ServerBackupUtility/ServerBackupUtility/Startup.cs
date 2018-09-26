@@ -3,6 +3,7 @@ using ServerBackupUtility.Logging;
 using ServerBackupUtility.Services;
 using System;
 using System.Configuration;
+using System.Linq;
 using System.ServiceProcess;
 using System.Threading;
 
@@ -29,7 +30,7 @@ namespace ServerBackupUtility
             _restartService = new RestartService();
             _restartService.WatchAppConfig();
 
-            if (args.Length > 0 && args[0] == "debug")
+            if (args.Any() && args[0] == "debug")
             {
                 _mode = "interval";
                 _minutes = 1;

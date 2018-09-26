@@ -57,7 +57,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFiles #1 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles (Read Paths) - " + ex.Message);
             }
             finally
             {
@@ -95,7 +95,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFiles #2 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles (Upload Files) - " + ex.Message);
             }
 
             LogService.LogEvent("Finished Backup Files Transfer");

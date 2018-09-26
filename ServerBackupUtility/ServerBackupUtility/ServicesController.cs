@@ -1,6 +1,7 @@
 ﻿
 using ServerBackupUtility.Logging;
 using ServerBackupUtility.Services;
+using System;
 using System.Net;
 
 namespace ServerBackupUtility
@@ -26,23 +27,30 @@ namespace ServerBackupUtility
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            LogService.LogEvent();
-            _archiveService.CreateArchives();
-
-            LogService.LogEvent();
-
-            if (_transferService.InitializeFtpAsync().Result)
+            try
             {
-                _uploadService.UploadBackupFiles(_transferService);
+                LogService.LogEvent();
+                _archiveService.CreateArchives();
 
                 LogService.LogEvent();
-                _databaseService.BackupDatabases(_transferService);
+
+                if (_transferService.InitializeFtpAsync().Result)
+                {
+                    _uploadService.UploadBackupFiles(_transferService);
+
+                    LogService.LogEvent();
+                    _databaseService.BackupDatabases(_transferService);
+                }
+
+                LogService.LogEvent("End Scheduled Global Server Backup");
+                LogService.LogEvent();
+
+                _emailService.CreateMessge();
             }
-
-            LogService.LogEvent("End Scheduled Global Server Backup");
-            LogService.LogEvent();
-
-            _emailService.CreateMessge();
+            catch (Exception ex)
+            {
+                LogService.LogEvent("Error: ServicesController.RunBackup - " + ex.Message);
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ namespace ServerBackupUtility.Services
                     }
                 }
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }

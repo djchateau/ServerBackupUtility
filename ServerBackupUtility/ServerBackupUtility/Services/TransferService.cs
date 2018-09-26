@@ -25,7 +25,7 @@ namespace ServerBackupUtility.Services
         {
             LogService.LogEvent("Contacting FTP Server For Login");
 
-            Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
+            Uri baseUri = new Uri("ftp://" + _url + ':' + _port + '/');
 
             NetworkCredential networkCredential = new NetworkCredential();
             networkCredential.UserName = _userName;
@@ -67,6 +67,11 @@ namespace ServerBackupUtility.Services
 
                 return false;
             }
+            catch (Exception ex)
+            {
+                LogService.LogEvent("Error: FtpService.InitializeFtpAsync - " + ex.Message);
+                return false;
+            }
             finally
             {
                 if (response != null)
@@ -78,7 +83,7 @@ namespace ServerBackupUtility.Services
 
         public async Task<Boolean> UploadFileAsync(string filePath)
         {
-            Uri baseUri = _port == "21" ? new Uri("ftp://" + _url + '/') : new Uri("ftp://" + _url + ':' + _port + '/');
+            Uri baseUri = new Uri("ftp://" + _url + ':' + _port + '/');
 
             NetworkCredential networkCredential = new NetworkCredential();
             networkCredential.UserName = _userName;
@@ -104,6 +109,9 @@ namespace ServerBackupUtility.Services
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
                 fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+                request.ContentLength = fileStream.Length;
+
                 Stream requestStream = await request.GetRequestStreamAsync();
 
                 byte[] buffer = new byte[32768];
@@ -133,6 +141,11 @@ namespace ServerBackupUtility.Services
                 response = (FtpWebResponse) ex.Response;
                 LogService.LogEvent("Error: FtpService.UploadFileAsync - " + response.StatusDescription);
 
+                return false;
+            }
+            catch (Exception ex)
+            {
+                LogService.LogEvent("Error: FtpService.InitializeFtpAsync - " + ex.Message);
                 return false;
             }
             finally

@@ -37,8 +37,8 @@ namespace ServerBackupUtility.Services
                 {
                     foreach (var dbFilePath in dbFilePaths)
                     {
-                        int index = dbFilePath.Trim().LastIndexOf('\\');
-                        string dbName = dbFilePath.Trim().Substring(index + 1);
+                        int index = dbFilePath.LastIndexOf('\\');
+                        string dbName = dbFilePath.Substring(index + 1);
 
                         LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
 

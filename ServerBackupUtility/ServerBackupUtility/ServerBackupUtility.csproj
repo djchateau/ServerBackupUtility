@@ -178,8 +178,7 @@
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>services.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All|AnyCPU'">
     <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
@@ -300,6 +299,7 @@
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="AlphaVSS.Common, Version=1.4.0.0, Culture=neutral, PublicKeyToken=959d3993561034e3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -376,6 +376,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="services.ico" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
