@@ -178,8 +178,7 @@
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>services.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All|AnyCPU'">
     <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
@@ -300,6 +299,7 @@
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="AlphaVSS.Common, Version=1.4.0.0, Culture=neutral, PublicKeyToken=959d3993561034e3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -346,7 +346,7 @@
     <Compile Include="Startup.Designer.cs">
       <DependentUpon>Startup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\CompressionService.cs" />
+    <Compile Include="Services\ArchiveService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\UploadService.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -354,7 +354,7 @@
     <Compile Include="Services\SmtpService.cs" />
     <Compile Include="Services\IRestartService.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Services\ICompressionService.cs" />
+    <Compile Include="Services\IArchiveService.cs" />
     <Compile Include="Services\IDatabaseService.cs" />
     <Compile Include="Services\ISmtpService.cs" />
     <Compile Include="Services\IEmailService.cs" />
@@ -376,6 +376,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="services.ico" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

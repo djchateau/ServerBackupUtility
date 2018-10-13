@@ -9,16 +9,33 @@ using System.Linq;
 
 namespace ServerBackupUtility.Services
 {
-    public class CompressionService : ICompressionService
+    public class ArchiveService : IArchiveService
     {
         private readonly string _archivePaths = ConfigurationManager.AppSettings["ArchivePaths"].Trim();
         private readonly string _backupPath = ConfigurationManager.AppSettings["BackupPath"].Trim();
 
         public void CreateArchives()
         {
-            LogService.LogEvent("Reading Archive File Paths");
+            LogService.LogEvent("Reading Archive Folder Paths");
+            LogService.LogEvent();
 
-            string[] archivePaths = _archivePaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] archivePaths = null;
+
+            if (!String.IsNullOrEmpty(_archivePaths))
+            {
+                archivePaths = _archivePaths.Split(new [] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                LogService.LogEvent("No Archive Paths Folder Specified - Skipping Folder Archiving");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(_backupPath))
+            {
+                LogService.LogEvent("No Backup Path Folder Specified - Skipping Folder Archiving");
+                return;
+            }
 
             try
             {
@@ -32,8 +49,8 @@ namespace ServerBackupUtility.Services
                         {
                             foreach (var directoryPath in directoryPaths)
                             {
-                                int index = directoryPath.Trim().LastIndexOf('\\');
-                                string directoryName = directoryPath.Trim().Substring(index);
+                                int index = directoryPath.LastIndexOf('\\');
+                                string directoryName = directoryPath.Substring(index);
 
                                 LogService.LogEvent("Creating Archive: " + directoryName);
                                 ZipFile.CreateFromDirectory(directoryPath, _backupPath + directoryName + ".zip", CompressionLevel.Optimal, true);
@@ -42,12 +59,13 @@ namespace ServerBackupUtility.Services
                     }
                 }
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 LogService.LogEvent("Error: ArchiveService.CreateArchives - " + ex.Message);
             }
 
-            LogService.LogEvent("Finished Archive File Compression");
+            LogService.LogEvent();
+            LogService.LogEvent("Finished Archiving Folders");
         }
     }
 }

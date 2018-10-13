@@ -3,7 +3,6 @@ using ServerBackupUtility.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.ServiceProcess;
 
 namespace ServerBackupUtility.Services
 {

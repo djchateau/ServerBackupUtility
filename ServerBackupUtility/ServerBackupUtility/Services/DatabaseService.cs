@@ -17,8 +17,19 @@ namespace ServerBackupUtility.Services
         public void BackupDatabases(ITransferService transferService)
         {
             LogService.LogEvent("Reading Database Files");
+            LogService.LogEvent();
 
-            IEnumerable<String> dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
+            IEnumerable<String> dbFilePaths = null;
+
+            if (!String.IsNullOrEmpty(_databasePath))
+            {
+                dbFilePaths = Directory.EnumerateFiles(_databasePath, "*", SearchOption.AllDirectories);
+            }
+            else
+            {
+                LogService.LogEvent("No Database Folder Specified - Skipping Database Files Backup");
+                return;
+            }
 
             try
             {
@@ -26,12 +37,12 @@ namespace ServerBackupUtility.Services
                 {
                     foreach (var dbFilePath in dbFilePaths)
                     {
-                        int index = dbFilePath.Trim().LastIndexOf('\\');
-                        string dbName = dbFilePath.Trim().Substring(index + 1);
+                        int index = dbFilePath.LastIndexOf('\\');
+                        string dbName = dbFilePath.Substring(index + 1);
 
                         LogService.LogEvent("Uploading DataBase To FTP Server: " + dbName);
 
-                        if (transferService.UploadFile(dbFilePath))
+                        if (transferService.UploadFileAsync(dbFilePath).Result)
                         {
                             Thread.Sleep(1000);
                             if (_deleteFiles) { File.Delete(dbFilePath); }
@@ -44,7 +55,8 @@ namespace ServerBackupUtility.Services
                 LogService.LogEvent("Error: DatabaseService.BackupDatabases - " + ex.Message);
             }
 
-            LogService.LogEvent("Finiahed Database Files Transfer");
+            LogService.LogEvent("Finished Database Files Transfer");
+            LogService.LogEvent();
         }
     }
 }

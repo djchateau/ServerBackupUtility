@@ -1,13 +1,14 @@
 ﻿
 using ServerBackupUtility.Logging;
 using ServerBackupUtility.Services;
+using System;
 using System.Net;
 
 namespace ServerBackupUtility
 {
     public class ServicesController
     {
-        private readonly ICompressionService _compressionService;
+        private readonly IArchiveService _archiveService;
         private readonly ITransferService _transferService;
         private readonly IUploadService _uploadService;
         private readonly IDatabaseService _databaseService;
@@ -15,7 +16,7 @@ namespace ServerBackupUtility
 
         public ServicesController()
         {
-            _compressionService = new CompressionService();
+            _archiveService = new ArchiveService();
             _transferService = new TransferService();
             _uploadService = new UploadService();
             _databaseService = new DatabaseService();
@@ -24,24 +25,32 @@ namespace ServerBackupUtility
 
         public void RunBackup()
         {
-            LogService.LogEvent();
-            _compressionService.CreateArchives();
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            LogService.LogEvent();
-
-            if (_transferService.InitializeFtp())
+            try
             {
                 LogService.LogEvent();
-                _uploadService.UploadBackupFiles(_transferService);
+                _archiveService.CreateArchives();
 
                 LogService.LogEvent();
-                _databaseService.BackupDatabases(_transferService);
+
+                if (_transferService.InitializeFtpAsync().Result)
+                {
+                    _uploadService.UploadBackupFiles(_transferService);
+
+                    LogService.LogEvent();
+                    _databaseService.BackupDatabases(_transferService);
+                }
+
+                LogService.LogEvent("End Scheduled Global Server Backup");
+                LogService.LogEvent();
+
+                _emailService.CreateMessge();
             }
-
-            LogService.LogEvent("End Scheduled Global Server Backup");
-            LogService.LogEvent();
-
-            _emailService.CreateMessge();
+            catch (Exception ex)
+            {
+                LogService.LogEvent("Error: ServicesController.RunBackup - " + ex.Message);
+            }
         }
     }
 }

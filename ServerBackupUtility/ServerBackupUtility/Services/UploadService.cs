@@ -19,11 +19,30 @@ namespace ServerBackupUtility.Services
 
         public void UploadBackupFiles(ITransferService transferService)
         {
-            StreamReader backupFiles = new StreamReader(_path + "\\DirectBackupPaths.config", Encoding.UTF8);
+            LogService.LogEvent("Reading Backup Files");
+            LogService.LogEvent();
+
+            StreamReader backupFiles = null;
             ICollection<String> backupPaths = null;
 
-            LogService.LogEvent("Reading Backup Files");
-
+            if (!String.IsNullOrEmpty(_backupPath))
+            {
+                if (File.Exists(_path + "\\DirectBackupPaths.config"))
+                {
+                    backupFiles = new StreamReader(_path + "\\DirectBackupPaths.config", Encoding.UTF8);
+                }
+                else
+                {
+                    LogService.LogEvent("Missing DirectBackupPaths.config File - Skipping Direct Backup Files Upload");
+                    return;
+                }
+            }
+            else
+            {
+                LogService.LogEvent("No Backup Path Folder Specified - Skipping Direct Backup Files Upload");
+                return;
+            }
+            
             try
             {
                 string line;
@@ -38,7 +57,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFiles #1 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles (Read Paths) - " + ex.Message);
             }
             finally
             {
@@ -51,9 +70,9 @@ namespace ServerBackupUtility.Services
                 {
                     foreach (var backupPath in backupPaths)
                     {
-                        int index1 = backupPath.Trim().LastIndexOf('\\');
-                        string filePattern = backupPath.Trim().Substring(index1 + 1);
-                        string folderPath = backupPath.Trim().Substring(0, index1);
+                        int index1 = backupPath.LastIndexOf('\\');
+                        string filePattern = backupPath.Substring(index1 + 1);
+                        string folderPath = backupPath.Substring(0, index1);
 
                         IEnumerable<String> filePaths = Directory.EnumerateFiles(folderPath, filePattern, SearchOption.AllDirectories);
 
@@ -64,7 +83,7 @@ namespace ServerBackupUtility.Services
                                 string fileName = Path.GetFileName(filePath);
                                 LogService.LogEvent("Uploading Backup Files To FTP Server: " + fileName);
 
-                                if (transferService.UploadFile(filePath))
+                                if (transferService.UploadFileAsync(filePath).Result)
                                 {
                                     Thread.Sleep(1000);
                                     if (_deleteFiles) { File.Delete(filePath); }
@@ -76,7 +95,7 @@ namespace ServerBackupUtility.Services
             }
             catch (Exception ex)
             {
-                LogService.LogEvent("Error: UploadService.UploadBackupFiles #2 - " + ex.Message);
+                LogService.LogEvent("Error: UploadService.UploadBackupFiles (Upload Files) - " + ex.Message);
             }
 
             LogService.LogEvent("Finished Backup Files Transfer");

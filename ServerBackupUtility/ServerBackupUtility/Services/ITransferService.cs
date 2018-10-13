@@ -1,9 +1,12 @@
 
+using System;
+using System.Threading.Tasks;
+
 namespace ServerBackupUtility.Services
 {
     public interface ITransferService
     {
-        bool InitializeFtp();
-        bool UploadFile(string filePath);
+        Task<Boolean> InitializeFtpAsync();
+        Task<Boolean> UploadFileAsync(string filePath);
     }
 }
