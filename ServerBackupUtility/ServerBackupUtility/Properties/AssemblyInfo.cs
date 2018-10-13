@@ -15,14 +15,14 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Quality Software Ltd")]
 [assembly: AssemblyProduct("ServerBackupUtility")]
-[assembly: AssemblyCopyright("Copyright © 2016-2018 - Quality Software Ltd")]
+[assembly: AssemblyCopyright("Copyright © 2016-2018 - Added to the Public domain by Quality Software Ltd")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("2614c9f4-a15e-42db-82ca-58077705bad6")]
 
-[assembly: AssemblyVersion("1.9.265")]
-[assembly: AssemblyFileVersion("1.9.265")]
-[assembly: AssemblyInformationalVersion("1.9.265")]
+[assembly: AssemblyVersion("1.10.286")]
+[assembly: AssemblyFileVersion("1.10.286")]
+[assembly: AssemblyInformationalVersion("1.10.286")]
 

@@ -105,6 +105,7 @@ namespace ServerBackupUtility
             WriteToLog("Begin Backup Session");
             ServicesController servicesController = new ServicesController();
             servicesController.RunBackup();
+            SchedulerService();
         }
 
         private void WriteToLog(string message)
