@@ -22,6 +22,37 @@ namespace ServerBackupUtility.Services
             fileWatcher.Changed += FileWatcher_Changed;
         }
 
+        public void RestartScheduler()
+        {
+            Process process = new Process();
+
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
+
+                processStartInfo.WorkingDirectory = _path;
+                processStartInfo.FileName = "RestartScheduler.bat";
+                processStartInfo.CreateNoWindow = true;
+                processStartInfo.LoadUserProfile = false;
+                processStartInfo.UseShellExecute = false;
+                processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+                process.StartInfo = processStartInfo;
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                LogService.LogEvent("Error: RestartService.RestartScheduler - " + ex.Message);
+            }
+            finally
+            {
+                if (process != null)
+                {
+                    process.Close();
+                }
+            }
+        }
+
         private void FileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             Process process = new Process();

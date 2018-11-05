@@ -2,6 +2,7 @@
 using ServerBackupUtility.Logging;
 using ServerBackupUtility.Services;
 using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.ServiceProcess;
@@ -9,9 +10,10 @@ using System.Threading;
 
 namespace ServerBackupUtility
 {
-    public partial class Startup : ServiceBase
+    public class Startup : ServiceBase
     {
         private Timer _scheduler = null;
+        private IContainer _components = null;
         private IRestartService _restartService = null;
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
         private string _mode = ConfigurationManager.AppSettings["SchedulerMode"].ToLower().Trim();
@@ -20,14 +22,14 @@ namespace ServerBackupUtility
 
         public Startup()
         {
-            InitializeComponent();
+            ServiceName = "BackupScheduler";
+            _restartService = new RestartService();
         }
 
         protected override void OnStart(string[] args)
         {
             WriteToLog("Backup Scheduler Service Started");
 
-            _restartService = new RestartService();
             _restartService.WatchAppConfig();
 
             if (args.Any() && args[0] == "debug")
@@ -36,7 +38,7 @@ namespace ServerBackupUtility
                 _minutes = 1;
             }
 
-            SchedulerService();
+            SchedulerService(_mode);
         }
 
         protected override void OnStop()
@@ -45,13 +47,13 @@ namespace ServerBackupUtility
             _scheduler.Dispose();
         }
 
-        public void SchedulerService()
+        public void SchedulerService(string mode)
         {
             try
             {
                 _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
-                switch (_mode)
+                switch (mode)
                 {
                     case "clock":
                         if (_time > DateTime.Parse("23:30") && _time < DateTime.Parse("00:00"))
@@ -94,7 +96,7 @@ namespace ServerBackupUtility
                 WriteToLog(String.Format("Backup Scheduler Service Error: {0}", ex.Message));
 
                 // Stop the Windows service.
-                using (ServiceController serviceController = new ServiceController("BackupScheduler"))
+                using (var serviceController = new ServiceController("BackupScheduler"))
                 {
                     serviceController.Stop();
                 }
@@ -104,15 +106,32 @@ namespace ServerBackupUtility
         private void SchedulerCallback(object e)
         {
             WriteToLog("Begin Backup Session");
-            ServicesController servicesController = new ServicesController();
+
+            var servicesController = new ServicesController();
             servicesController.RunBackup();
-            SchedulerService();
+
+            SchedulerService(_mode);
         }
 
         private void WriteToLog(string message)
         {
             LogService.CreateLog("Daily Log Created");
             LogService.LogEvent(message);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (_scheduler != null))
+            {
+                _scheduler.Dispose();
+            }
+
+            if (disposing && (_components != null))
+            {
+                _components.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -343,9 +343,6 @@
     <Compile Include="Startup.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Startup.Designer.cs">
-      <DependentUpon>Startup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Services\ArchiveService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\UploadService.cs" />
@@ -370,9 +367,6 @@
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Startup.resx">
-      <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
