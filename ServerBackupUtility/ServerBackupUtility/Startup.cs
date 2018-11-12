@@ -32,13 +32,13 @@ namespace ServerBackupUtility
 
             _restartService.WatchAppConfig();
 
-            if (args.Any() && args[0] == "debug")
+            if (args.Length > 0 && args[0] == "debug")
             {
                 _mode = "interval";
                 _minutes = 1;
             }
 
-            SchedulerService(_mode);
+            SchedulerService();
         }
 
         protected override void OnStop()
@@ -47,13 +47,13 @@ namespace ServerBackupUtility
             _scheduler.Dispose();
         }
 
-        public void SchedulerService(string mode)
+        public void SchedulerService()
         {
             try
             {
                 _scheduler = new Timer(new TimerCallback(SchedulerCallback));
 
-                switch (mode)
+                switch (_mode)
                 {
                     case "clock":
                         if (_time > DateTime.Parse("23:30") && _time < DateTime.Parse("00:00"))
@@ -110,7 +110,8 @@ namespace ServerBackupUtility
             var servicesController = new ServicesController();
             servicesController.RunBackup();
 
-            SchedulerService(_mode);
+            RestartService restartService = new RestartService();
+            restartService.RestartScheduler();
         }
 
         private void WriteToLog(string message)
