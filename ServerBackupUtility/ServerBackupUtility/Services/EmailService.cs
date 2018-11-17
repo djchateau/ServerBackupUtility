@@ -10,7 +10,7 @@ namespace ServerBackupUtility.Services
     public class EmailService : IEmailService
     {
         private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
-        private readonly string _dateTime = DateTime.Now.ToLocalTime().ToString("yy-MM-dd");
+        private readonly string _dateTime = DateTime.Now.ToString("yy-MM-dd");
         private readonly bool _emailService = Convert.ToBoolean(ConfigurationManager.AppSettings["EmailService"].Trim());
 
         public void CreateMessge()

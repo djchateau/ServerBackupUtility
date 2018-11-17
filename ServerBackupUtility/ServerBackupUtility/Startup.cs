@@ -4,7 +4,7 @@ using ServerBackupUtility.Services;
 using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Linq;
+using System.IO;
 using System.ServiceProcess;
 using System.Threading;
 
@@ -15,7 +15,8 @@ namespace ServerBackupUtility
         private Timer _scheduler = null;
         private IContainer _components = null;
         private IRestartService _restartService = null;
-        private readonly string _path = AppDomain.CurrentDomain.BaseDirectory;
+        private string _path = AppDomain.CurrentDomain.BaseDirectory;
+        private string _dateTime = DateTime.Now.ToString("yy-MM-dd");
         private string _mode = ConfigurationManager.AppSettings["SchedulerMode"].ToLower().Trim();
         private DateTime _time = DateTime.Parse(ConfigurationManager.AppSettings["ClockTime"].Trim());
         private int _minutes = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalTime"].Trim());
@@ -105,7 +106,7 @@ namespace ServerBackupUtility
 
         private void SchedulerCallback(object e)
         {
-            WriteToLog("Begin Backup Session");
+            LogService.CreateLog("Begin Backup Session");
 
             var servicesController = new ServicesController();
             servicesController.RunBackup();
@@ -116,8 +117,10 @@ namespace ServerBackupUtility
 
         private void WriteToLog(string message)
         {
-            LogService.CreateLog("Daily Log Created");
-            LogService.LogEvent(message);
+            if (File.Exists(_path + "\\LogFiles\\" + _dateTime + ".txt"))
+            {
+                LogService.LogEvent(message);
+            }
         }
 
         protected override void Dispose(bool disposing)
