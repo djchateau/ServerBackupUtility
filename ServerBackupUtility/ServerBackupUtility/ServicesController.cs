@@ -46,6 +46,8 @@ namespace ServerBackupUtility
                 LogService.LogEvent();
 
                 _emailService.CreateMessge();
+                LogService.LogEvent();
+                LogService.LogEvent();
             }
             catch (Exception ex)
             {
