@@ -1,5 +1,7 @@
 
 /*
+    Copyright © 2016-2018 - Added to the Public domain by Quality Software Ltd
+
     This Program is Free Software: You can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, version 3 of the License.
@@ -15,14 +17,14 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Quality Software Ltd")]
 [assembly: AssemblyProduct("ServerBackupUtility")]
-[assembly: AssemblyCopyright("Copyright © 2016-2018 - Added to the Public domain by Quality Software Ltd")]
+[assembly: AssemblyCopyright("Copyright © 2016-2018 - Quality Software Ltd")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("2614c9f4-a15e-42db-82ca-58077705bad6")]
 
-[assembly: AssemblyVersion("1.11.323")]
-[assembly: AssemblyFileVersion("1.11.323")]
-[assembly: AssemblyInformationalVersion("1.11.323")]
+[assembly: AssemblyVersion("1.12.357")]
+[assembly: AssemblyFileVersion("1.12.357")]
+[assembly: AssemblyInformationalVersion("1.12.357")]
 

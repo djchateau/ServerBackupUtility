@@ -27,7 +27,7 @@
     </AssemblyInfoVersionSettings>
     <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
     <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
-    <AssemblyVersion>1.11.323</AssemblyVersion>
+    <AssemblyVersion>1.12.357</AssemblyVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -392,6 +392,12 @@
       <ProductName>Microsoft .NET Framework 4.7.2 x64</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ScheduleTimer\ScheduleTimer.csproj">
+      <Project>{a1087fdb-40e7-461c-8402-af74aefc3e51}</Project>
+      <Name>ScheduleTimer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

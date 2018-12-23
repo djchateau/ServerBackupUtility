@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 		Libraries\AlphaVSS.x64.dll = Libraries\AlphaVSS.x64.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleTimer", "..\ScheduleTimer\ScheduleTimer.csproj", "{A1087FDB-40E7-461C-8402-AF74AEFC3E51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -82,6 +84,30 @@ Global
 		{E0CFB42A-4485-4D57-98C8-BC45A76D0196}.Release|x64.Build.0 = DefaultBuild
 		{E0CFB42A-4485-4D57-98C8-BC45A76D0196}.Release|x86.ActiveCfg = DefaultBuild
 		{E0CFB42A-4485-4D57-98C8-BC45A76D0196}.Release|x86.Build.0 = DefaultBuild
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|Any CPU.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|ARM.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|ARM.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|x64.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|x64.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|x86.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.All|x86.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|ARM.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|x64.Build.0 = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1087FDB-40E7-461C-8402-AF74AEFC3E51}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
