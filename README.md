@@ -40,7 +40,9 @@ If All Else Fails, Read The Directions...
 Questions, Suggestions or Feature Requests
 ------------------------------------------
 
-You can reach me at fwchateau@gmail.com. Add Server Backup Utility to the subject line. I filter this email address to eliminate SPAM. If you do not add the phrase Server Backup Utility to the subject line, I may not see your email.
+Due to the author's untimely passing, this project is no longer being actively maintained. If you have interest in maintaining this project, please email me@danielchateau.com for details.
+
+~~You can reach me at fwchateau@gmail.com. Add Server Backup Utility to the subject line. I filter this email address to eliminate SPAM. If you do not add the phrase Server Backup Utility to the subject line, I may not see your email.~~
 
 
 DirectBackupPaths.config File
